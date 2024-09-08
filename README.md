@@ -1,5 +1,4 @@
-# [Shudi The Data Scientist Portfolio]([https://shudi-zhao.github.io/My_Data_Science_Blog/](https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/))
-
+# [Shudi The Data Scientist Portfolio](https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/)
 
 ## Overview
 
