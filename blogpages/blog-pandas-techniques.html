@@ -1,94 +1,496 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <title>Data Manipulation with Pandas: Key Functions and Techniques - Shudi Zhao</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
-        <link rel="stylesheet" href="../assets/css/main.css" />
-        <link rel="canonical" href="https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blog-pandas-techniques.html" />
-        <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
-        <link rel="apple-touch-icon" sizes="180x180" href="../images/logo/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="../images/logo/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="../images/logo/favicon-16x16.png">
-        <link rel="manifest" href="../images/logo/site.webmanifest">
-        <meta name="description" content="Explore essential Pandas functions and techniques for effective data manipulation and analysis." />
-    </head>
-    <body class="is-preload">
 
-        <!-- Wrapper -->
-        <div id="wrapper">
+<head>
+    <title>Data Manipulation with Pandas: Key Functions and Techniques - Shudi Zhao</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="canonical"
+        href="https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blog-pandas-techniques.html" />
+    <noscript>
+        <link rel="stylesheet" href="../assets/css/noscript.css" />
+    </noscript>
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/logo/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/logo/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/logo/favicon-16x16.png">
+    <link rel="manifest" href="../images/logo/site.webmanifest">
+    <meta name="description"
+        content="Explore essential Pandas functions and techniques for effective data manipulation and analysis." />
+    <!-- Syntax Highlighting CSS (Optional) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" />
+</head>
 
-            <!-- Header -->
-            <header id="header">
-                <a href="../home.html" class="logo">Shudi The Data Scientist</a>
-            </header>
+<body class="is-preload">
 
-            <!-- Nav -->
-            <nav id="nav">
-                <ul class="links">
-                    <li><a href="../home.html">Projects</a></li>
-                    <li><a href="../aboutme.html">About Me</a></li>
-                    <li class="active"><a href="../blogs.html">Blogs</a></li>
-                </ul>
-            </nav>
+    <!-- Wrapper -->
+    <div id="wrapper">
 
-            <!-- Main -->
-            <div id="main">
+        <!-- Header -->
+        <header id="header">
+            <a href="../home.html" class="logo">Shudi The Data Scientist</a>
+        </header>
 
-                <!-- Blog Post Section -->
-                <section class="post">
-                    <header class="major">
-                        <h1>Data Manipulation with Pandas: Key Functions and Techniques</h1>
-                        <p><em>Posted on [Upcoming] | Estimated Reading Time: TBD</em></p>
-                    </header>
+        <!-- Nav -->
+        <nav id="nav">
+            <ul class="links">
+                <li><a href="../home.html">Projects</a></li>
+                <li><a href="../aboutme.html">About Me</a></li>
+                <li class="active"><a href="../blogs.html">Blogs</a></li>
+            </ul>
+        </nav>
 
-                    <!-- Content -->
-                    <h2>Coming Soon</h2>
-                    <p>We're working hard to bring you an in-depth guide on data manipulation with Pandas. This post will cover essential functions and techniques to help you effectively manipulate and analyze data using Pandas.</p>
-                    <p>Stay tuned for updates!</p>
+        <!-- Main -->
+        <div id="main">
 
-                    <!-- Back to Blogs -->
-                    <p><a href="../blogs.html">&larr; Back to Blogs</a></p>
+            <!-- Blog Post Section -->
+            <section class="post">
+                <header class="major">
+                    <h1>Data Manipulation with Pandas: Key Functions and Techniques</h1>
+                    <p><em>Posted on Nov 9, 2024 | Estimated Reading Time: 15 minutes</em></p>
+                </header>
 
-                </section>
+                <!-- Content -->
 
-            </div>
+                <h2>Introduction</h2>
+                <p>Pandas is a powerful and versatile library for data manipulation and analysis in Python. It provides
+                    data structures like <code>DataFrame</code> and <code>Series</code> which are essential for handling
+                    structured data. This guide covers key functions and techniques in Pandas that every data scientist
+                    should know, especially when preparing for interviews.</p>
 
-            <!-- Footer -->
-            <footer id="footer">
-                <section class="split contact">
-                    <section class="alt">
-                        <h3>Location</h3>
-                        <p>Brooklyn, NY<br /></p>
-                    </section>
-                    <section>
-                        <h3>Phone</h3>
-                        <p><a href="tel:+13127216988">(312) 721-6988</a></p>
-                    </section>
-                    <section>
-                        <h3>Email</h3>
-                        <p><a href="mailto:shudizhao923@gmail.com">shudizhao923@gmail.com</a></p>
-                    </section>
-                    <section>
-                        <h3>Social</h3>
-                        <ul class="icons alt">
-                            <li><a href="https://www.linkedin.com/in/shudi-zhao/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
-                            <li><a href="https://github.com/Shudi-Zhao" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                <hr />
+
+                <!-- Section 1 -->
+                <h2>1. Importing Pandas and Reading Data</h2>
+                <p>Before you can manipulate data, you need to read it into your Python environment.</p>
+
+                <h3>Importing Pandas</h3>
+                <pre><code class="language-python">import pandas as pd
+                    </code></pre>
+
+                <h3>Reading Data from CSV</h3>
+                <pre><code class="language-python">df = pd.read_csv('data.csv')
+                    </code></pre>
+
+                <h3>Reading Data from Excel</h3>
+                <pre><code class="language-python">df = pd.read_excel('data.xlsx', sheet_name='Sheet1')
+                    </code></pre>
+
+                <h3>Reading Data from SQL Database</h3>
+                <pre><code class="language-python">import sqlite3
+
+conn = sqlite3.connect('database.db')
+df = pd.read_sql_query('SELECT * FROM table_name', conn)
+                    </code></pre>
+
+                <p><strong>Why It's Important:</strong> Knowing how to import data from various sources is the first
+                    step in any data manipulation task.</p>
+
+                <hr />
+
+                <!-- Section 2 -->
+                <h2>2. DataFrame Basics</h2>
+                <p>Understanding the basic structure and properties of a DataFrame.</p>
+
+                <h3>Exploring the DataFrame</h3>
+                <pre><code class="language-python">df.head()          # View the first 5 rows
+df.tail()          # View the last 5 rows
+df.info()          # Get a summary of the DataFrame
+df.describe()      # Get statistical summary
+                    </code></pre>
+
+                <h3>Accessing Columns</h3>
+                <pre><code class="language-python">df['column_name']          # Access a single column
+df[['col1', 'col2']]    # Access multiple columns
+                    </code></pre>
+
+                <h3>Adding New Columns</h3>
+                <pre><code class="language-python">df['new_column'] = df['col1'] + df['col2']
+                    </code></pre>
+
+                <p><strong>Why It's Important:</strong> Mastering DataFrame basics is essential for efficient data
+                    manipulation.</p>
+
+                <hr />
+
+                <!-- Section 3 -->
+                <h2>3. Selecting and Filtering Data</h2>
+                <p>Learn how to select specific data based on conditions.</p>
+
+                <h3>Indexing and Slicing</h3>
+                <pre><code class="language-python">df.iloc[0:5, 0:3]     # Select rows by position
+df.loc[0:5, ['col1', 'col2']]  # Select rows and columns by labels
+                    </code></pre>
+
+                <h3>Conditional Selection</h3>
+                <pre><code class="language-python">df[df['col1'] > 50]          # Rows where col1 > 50
+df[(df['col1'] > 50) & (df['col2'] == 'A')]  # Multiple conditions
+                    </code></pre>
+
+                <h3>isin() Function</h3>
+                <pre><code class="language-python">df[df['col2'].isin(['A', 'B'])]
+                    </code></pre>
+
+                <p><strong>Why It's Important:</strong> Efficient data selection is crucial for data analysis and
+                    feature engineering.</p>
+
+                <hr />
+
+                <!-- Section 4 -->
+                <h2>4. Handling Missing Data</h2>
+                <p>Techniques to detect, remove, and fill missing values.</p>
+
+                <h3>Detecting Missing Values</h3>
+                <pre><code class="language-python">df.isnull()          # Check for null values
+df.isnull().sum()   # Count of null values per column
+                    </code></pre>
+
+                <h3>Dropping Missing Values</h3>
+                <pre><code class="language-python">df.dropna()                  # Drop rows with any null values
+df.dropna(axis=1)            # Drop columns with any null values
+df.dropna(thresh=2)          # Drop rows with at least 2 non-null values
+                    </code></pre>
+
+                <h3>Filling Missing Values</h3>
+                <pre><code class="language-python">df.fillna(0)                 # Replace null values with 0
+df['col1'].fillna(df['col1'].mean(), inplace=True)  # Replace with mean
+                    </code></pre>
+
+                <p><strong>Why It's Important:</strong> Handling missing data correctly ensures the integrity of your
+                    analysis.</p>
+
+                <hr />
+
+                <!-- Section 5 -->
+                <h2>5. Data Aggregation with GroupBy</h2>
+                <p>Summarize data using groupby operations.</p>
+
+                <h3>Basic GroupBy</h3>
+                <pre><code class="language-python">df_grouped = df.groupby('col1')
+df_grouped['col2'].mean()    # Mean of col2 for each group in col1
+                    </code></pre>
+
+                <h3>Multiple Aggregations</h3>
+                <pre><code class="language-python"># Group the DataFrame by 'col1', then calculate the mean of 'col2' and the sum of 'col3' for each group
+df_grouped = df.groupby('col1').agg({'col2': 'mean', 'col3': 'sum'})
+                    </code></pre>
+
+                <h3>Resetting Index</h3>
+                <pre><code class="language-python">df_grouped.reset_index(inplace=True)
+                    </code></pre>
+
+                <p><strong>Why It's Important:</strong> Grouping and aggregating data helps in deriving insights and
+                    preparing data for modeling.</p>
+
+                <hr />
+
+                <!-- Section 6 -->
+                <h2>6. Merging and Joining Data</h2>
+                <p>Combine multiple DataFrames with different joining methods.</p>
+
+                <h3>Concatenation</h3>
+                <pre><code class="language-python">df_combined = pd.concat([df1, df2], axis=0)  # Stack vertically
+df_combined = pd.concat([df1, df2], axis=1)  # Stack horizontally
+                    </code></pre>
+
+                <h3>Merge</h3>
+                <pre><code class="language-python"># Inner join: Returns rows with matching keys in both DataFrames.
+df_merged = pd.merge(df1, df2, on='key_column', how='inner')  # Inner join
+
+# Left join: Returns all rows from the left DataFrame and matching rows from the right.
+df_merged = pd.merge(df1, df2, on='key_column', how='left')   # Left join
+
+# Right join: Returns all rows from the right DataFrame and matching rows from the left.
+df_merged = pd.merge(df1, df2, on='key_column', how='right')  # Right join
+
+# Outer join: Returns all rows from both DataFrames, filling in missing matches with NaNs.
+df_merged = pd.merge(df1, df2, on='key_column', how='outer')  # Outer join
+                    </code></pre>
+
+                <h3>Join</h3>
+                <pre><code class="language-python">df_joined = df1.join(df2.set_index('key_column'), on='key_column')  # Join on index</code></pre>
+
+                <h3>Cross Join</h3>
+                <pre><code class="language-python">df_cross = df1.merge(df2, how='cross')  # Cartesian product</code></pre>
+
+                <p><strong>Why It's Important:</strong> Joining datasets allows you to combine information from
+                    different sources, often essential in data analysis.</p>
+                <hr />
+
+                <!-- Section 7 -->
+                <h2>7. Reshaping Data</h2>
+                <p>Transform the layout of your DataFrame.</p>
+
+                <h3>Pivot Table</h3>
+                <pre><code class="language-python"># Input
+data = {
+    'col1': ['A', 'A', 'B', 'B'],
+    'col2': ['X', 'Y', 'X', 'Y'],
+    'col3': [10, 20, 30, 40],
+    'col4': [5, 6, 7, 8]
+}
+df = pd.DataFrame(data)
+
+# Creating a pivot table with 'col1' as rows, 'col2' as columns, and calculating mean of 'col3' values
+df_pivot = df.pivot_table(index='col1', columns='col2', values='col3', aggfunc='mean')
+print(df_pivot)
+</code></pre>
+
+                <pre><code class="language-output"># Output
+col2     X     Y
+col1            
+A      10.0  20.0
+B      30.0  40.0
+</code></pre>
+
+                <h3>Melting</h3>
+                <pre><code class="language-python"># Melting the DataFrame, keeping 'col1' as identifier, and unpivoting 'col3' and 'col4' into long format
+df_melted = pd.melt(df, id_vars=['col1'], value_vars=['col3', 'col4'])
+print(df_melted)
+</code></pre>
+
+                <pre><code class="language-output"># Output
+  col1 variable  value
+0    A     col3     10
+1    A     col3     20
+2    B     col3     30
+3    B     col3     40
+4    A     col4      5
+5    A     col4      6
+6    B     col4      7
+7    B     col4      8
+</code></pre>
+
+                <h3>Stack and Unstack</h3>
+                <pre><code class="language-python"># Stacking columns into rows
+df_stacked = df.set_index(['col1', 'col2']).stack()
+print(df_stacked)
+
+# Unstacking the stacked DataFrame back to columns
+df_unstacked = df_stacked.unstack()
+print(df_unstacked)
+</code></pre>
+
+                <pre><code class="language-output">#Stacked DataFrame:
+col1  col2       
+A   X     col3    10
+          col4     5
+    Y     col3    20
+          col4     6
+B   X     col3    30
+          col4     7
+    Y     col3    40
+          col4     8
+
+
+# Unstacked Output
+       col3      col4     
+col2     X   Y     X    Y
+col1                      
+A      10.0 20.0   5.0  6.0
+B      30.0 40.0   7.0  8.0
+</code></pre>
+                <p><strong>Why It's Important:</strong> Reshaping data is essential for preparing datasets for analysis
+                    or visualization.</p>
+
+                <hr />
+
+                <!-- Section 8 -->
+                <h2>8. Working with Time Series Data</h2>
+                <p>Handle date and time data effectively.</p>
+
+                <h3>Parsing Dates</h3>
+                <pre><code class="language-python">df['date'] = pd.to_datetime(df['date_column'])
+                    </code></pre>
+
+                <h3>Setting Date as Index</h3>
+                <pre><code class="language-python">df.set_index('date', inplace=True)
+                    </code></pre>
+
+                <h3>Resampling</h3>
+                <pre><code class="language-python">df_resampled = df.resample('M').mean()  # Resampling by month to calculate the mean for each month
+                    </code></pre>
+
+                <h3>Time-based Selection</h3>
+                <pre><code class="language-python">df['2021-01']          # Select data for January 2021
+df['2021-01-01':'2021-01-31']  # Select data between two dates
+                    </code></pre>
+
+                <p><strong>Why It's Important:</strong> Time series analysis is a key aspect of data science, especially
+                    in forecasting and trend analysis.</p>
+
+                <hr />
+
+                <!-- Section 9 -->
+                <h2>9. Applying Functions</h2>
+                <p>Use custom functions to transform your data.</p>
+
+                <h3>Using apply() Function</h3>
+                <pre><code class="language-python">def add_prefix(x):
+    return 'ID_' + str(x)
+
+df['new_col'] = df['col1'].apply(add_prefix)
+                    </code></pre>
+
+                <h3>Lambda Functions</h3>
+                <pre><code class="language-python">df['col2'] = df['col2'].apply(lambda x: x * 2)
+                    </code></pre>
+
+                <h3>Applymap() Function</h3>
+                <p>Apply a function to every element of a DataFrame.</p>
+                <pre><code class="language-python">df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+                    </code></pre>
+
+                <p><strong>Why It's Important:</strong> Custom functions allow for complex data transformations that
+                    aren't possible with built-in methods.</p>
+
+                <hr />
+
+                <!-- Section 10 -->
+                <h2>10. Efficient Data Operations</h2>
+                <p>Optimize performance with vectorized operations.</p>
+
+                <h3>Vectorized String Methods</h3>
+                <pre><code class="language-python">df['col1'].str.upper()
+df['col1'].str.contains('pattern')
+                    </code></pre>
+
+                <h3>Vectorized Mathematical Operations</h3>
+                <pre><code class="language-python">df['col2'] = df['col2'] * 100
+df['col3'] = df['col3'] / df['col4']
+                    </code></pre>
+
+                <h3>Using NumPy Functions</h3>
+                <pre><code class="language-python">import numpy as np
+
+df['log_col'] = np.log(df['col5'])
+                    </code></pre>
+
+                <p><strong>Why It's Important:</strong> Vectorized operations are faster and more efficient than looping
+                    through DataFrame rows.</p>
+
+                <hr />
+
+                <!-- Sample Interview Questions -->
+
+                <h2>Sample Interview Questions</h2>
+
+                <h3>Question 1: How do you handle missing data in a DataFrame?</h3>
+                <p><strong>Answer:</strong> Missing data can be handled by detecting missing values using
+                    <code>isnull()</code> or <code>notnull()</code>, and then either dropping them using
+                    <code>dropna()</code> or filling them using <code>fillna()</code>. The choice depends on the context
+                    and the importance of the missing values.</p>
+
+                <hr />
+
+                <h3>Question 2: What is the difference between <code>merge</code> and <code>join</code> in Pandas?</h3>
+                <p><strong>Answer:</strong> Both are used to combine DataFrames. <code>merge</code> is a function that
+                    allows you to specify the columns to join on, similar to SQL joins, and is more flexible.
+                    <code>join</code> is a method of DataFrame that is convenient for joining on the index or a key
+                    column.</p>
+
+                <hr />
+
+                <h3>Question 3: Explain how you would reshape a DataFrame from wide to long format.</h3>
+                <p><strong>Answer:</strong> To reshape a DataFrame from wide to long format, you can use the
+                    <code>melt()</code> function. It unpivots a DataFrame from wide format to long format, making it
+                    suitable for certain types of data analysis and visualization.</p>
+
+                <hr />
+
+                <!-- Conclusion -->
+
+                <h2>Conclusion</h2>
+                <p>Mastering Pandas is crucial for efficient data manipulation and analysis in Python. The functions and
+                    techniques covered in this guide are fundamental for any data scientist. Practice using these
+                    methods on real datasets to strengthen your understanding and prepare for technical interviews.</p>
+
+                <hr />
+
+                <!-- Additional Resources -->
+
+                <h2>Additional Resources</h2>
+                <ul>
+                    <li><strong>Books:</strong>
+                        <ul>
+                            <li><em>Pandas for Everyone: Python Data Analysis</em> by Daniel Y. Chen</li>
+                            <li><em>Python for Data Analysis</em> by Wes McKinney</li>
                         </ul>
-                    </section>
-                </section>
-            </footer>
+                    </li>
+                    <li><strong>Online Tutorials:</strong>
+                        <ul>
+                            <li><a href="https://pandas.pydata.org/docs/" target="_blank">Pandas Official
+                                    Documentation</a></li>
+                            <li><a href="https://www.datacamp.com/community/tutorials/pandas-tutorial-dataframe-python"
+                                    target="_blank">DataCamp Pandas Tutorial</a></li>
+                        </ul>
+                    </li>
+                    <li><strong>Practice Platforms:</strong>
+                        <ul>
+                            <li><a href="https://www.kaggle.com/" target="_blank">Kaggle</a></li>
+                            <li><a href="https://github.com/guipsamora/pandas_exercises" target="_blank">Pandas Exercises on GitHub</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <hr />
+
+                <!-- Author's Note -->
+
+                <h2>Author's Note</h2>
+                <p>Thank you for reading! If you have any questions or comments, feel free to reach out. Stay tuned for
+                    more articles in this series.</p>
+
+                <!-- Back to Blogs -->
+
+                <p><a href="../blogs.html">&larr; Back to Blogs</a></p>
+
+            </section>
 
         </div>
 
-        <!-- Scripts -->
-        <script src="../assets/js/jquery.min.js"></script>
-        <script src="../assets/js/jquery.scrollex.min.js"></script>
-        <script src="../assets/js/jquery.scrolly.min.js"></script>
-        <script src="../assets/js/browser.min.js"></script>
-        <script src="../assets/js/breakpoints.min.js"></script>
-        <script src="../assets/js/util.js"></script>
-        <script src="../assets/js/main.js"></script>
+        <!-- Footer -->
+        <footer id="footer">
+            <section class="split contact">
+                <section class="alt">
+                    <h3>Location</h3>
+                    <p>Brooklyn, NY<br /></p>
+                </section>
+                <section>
+                    <h3>Phone</h3>
+                    <p><a href="tel:+13127216988">(312) 721-6988</a></p>
+                </section>
+                <section>
+                    <h3>Email</h3>
+                    <p><a href="mailto:shudizhao923@gmail.com">shudizhao923@gmail.com</a></p>
+                </section>
+                <section>
+                    <h3>Social</h3>
+                    <ul class="icons alt">
+                        <li><a href="https://www.linkedin.com/in/shudi-zhao/" class="icon brands alt fa-linkedin"><span
+                                    class="label">LinkedIn</span></a></li>
+                        <li><a href="https://github.com/Shudi-Zhao" class="icon brands alt fa-github"><span
+                                    class="label">GitHub</span></a></li>
+                    </ul>
+                </section>
+            </section>
+        </footer>
 
-    </body>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.scrollex.min.js"></script>
+    <script src="../assets/js/jquery.scrolly.min.js"></script>
+    <script src="../assets/js/browser.min.js"></script>
+    <script src="../assets/js/breakpoints.min.js"></script>
+    <script src="../assets/js/util.js"></script>
+    <script src="../assets/js/main.js"></script>
+
+    <!-- Syntax Highlighting JS (Optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js"></script>
+
+</body>
+
 </html>
