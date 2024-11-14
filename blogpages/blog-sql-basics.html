@@ -1,0 +1,451 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <!-- Title of the page -->
+        <title>SQL Basics: A Comprehensive Guide for Beginners - Shudi Zhao</title>
+        <meta charset="utf-8" />
+        <!-- Responsive design meta tag -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+        <!-- Link to the main CSS file -->
+        <link rel="stylesheet" href="../assets/css/main.css" />
+        <!-- Canonical link for SEO -->
+        <link rel="canonical" href="https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blog-sql-basics.html" />
+        <!-- Fallback for browsers with JavaScript disabled -->
+        <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+        <!-- Favicon and Apple touch icons -->
+        <link rel="apple-touch-icon" sizes="180x180" href="../images/logo/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../images/logo/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../images/logo/favicon-16x16.png">
+        <link rel="manifest" href="../images/logo/site.webmanifest">
+        <!-- Meta description for SEO -->
+        <meta name="description" content="Learn the fundamentals of SQL, including queries, joins, and subqueries, to kickstart your data science journey." />
+        <!-- Syntax Highlighting CSS (Optional) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" />
+    </head>
+    <body class="is-preload">
+
+        <!-- Wrapper -->
+        <div id="wrapper" class="fade-in">
+
+            <!-- Header -->
+            <header id="header">
+                <!-- Logo linking back to home page -->
+                <a href="../index.html" class="logo">Shudi The Data Scientist</a>
+            </header>
+
+            <!-- Navigation Menu -->
+            <nav id="nav">
+                <ul class="links">
+                    <li><a href="../index.html">Projects</a></li>
+                    <li><a href="../aboutme.html">About Me</a></li>
+                    <li class="active"><a href="../blogs.html">Blogs</a></li>
+                </ul>
+                <ul class="icons">
+                    <li><a href="https://www.linkedin.com/in/shudi-zhao/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="https://github.com/Shudi-Zhao" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <div id="main">
+
+                <!-- Blog Post Section -->
+                <section class="post">
+                    <header class="major">
+                        <!-- Blog post title and metadata -->
+                        <h1>SQL Basics: A Comprehensive Guide for Beginners</h1>
+                        <p><em>Posted on Nov 14, 2024 | Estimated Reading Time: 25 minutes</em></p>
+                    </header>
+
+                    <!-- Introduction -->
+                    <h2>Introduction</h2>
+                    <p>Structured Query Language (SQL) is the standard language for managing and manipulating relational databases. Whether you're a budding data scientist or a software developer, understanding SQL is essential. This guide will introduce you to the fundamentals of SQL, including basic queries, filtering, joins, and subqueries, laying a solid foundation for your data journey.</p>
+
+                    <hr />
+
+                    <!-- Section 1 -->
+                    <h2>1. What is SQL?</h2>
+                    <p>SQL is a domain-specific language used in programming for managing data held in relational database management systems (RDBMS). It allows you to create, read, update, and delete (CRUD) data.</p>
+
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Data Querying:</strong> Retrieve data from databases.</li>
+                        <li><strong>Data Manipulation:</strong> Insert, update, and delete data.</li>
+                        <li><strong>Data Definition:</strong> Create and modify database structures.</li>
+                        <li><strong>Access Control:</strong> Grant or revoke permissions.</li>
+                    </ul>
+
+                    <p><strong>Why It's Important:</strong> SQL is the backbone of data storage and retrieval in applications, making it crucial for data professionals.</p>
+
+                    <hr />
+
+                    <!-- Section 2 -->
+                    <h2>2. Basic SQL Syntax</h2>
+                    <p>Understanding the basic syntax is the first step toward mastering SQL.</p>
+
+                    <h3>SELECT Statement</h3>
+                    <p><strong>Use Case:</strong> Retrieve data from one or more tables.</p>
+                    <pre><code class="language-sql">
+SELECT column1, column2
+FROM table_name;
+                    </code></pre>
+
+                    <h3>SELECT All Columns</h3>
+                    <p><strong>Use Case:</strong> Retrieve all columns from a table.</p>
+                    <pre><code class="language-sql">
+SELECT *
+FROM table_name;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> The SELECT statement is the most commonly used command in SQL for querying data.</p>
+
+                    <hr />
+
+                    <!-- Section 3 -->
+                    <h2>3. Filtering Data with WHERE Clause</h2>
+                    <p>The WHERE clause allows you to filter records that meet specific criteria.</p>
+
+                    <h3>Basic WHERE Clause</h3>
+                    <p><strong>Use Case:</strong> Retrieve records that match a condition.</p>
+                    <pre><code class="language-sql">
+SELECT *
+FROM Employees
+WHERE department = 'Sales';
+                    </code></pre>
+
+                    <h3>Using Operators</h3>
+                    <p><strong>Use Case:</strong> Apply conditions using operators like =, >, <, BETWEEN, IN, LIKE.</p>
+                    <pre><code class="language-sql">
+-- Numeric comparison
+SELECT *
+FROM Products
+WHERE price > 100;
+
+-- Using BETWEEN
+SELECT *
+FROM Orders
+WHERE order_date BETWEEN '2024-01-01' AND '2024-12-31';
+
+-- Using IN
+SELECT *
+FROM Customers
+WHERE country IN ('USA', 'Canada');
+
+-- Using LIKE for pattern matching
+SELECT *
+FROM Employees
+WHERE last_name LIKE 'S%';
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Filtering data is essential for extracting meaningful insights from large datasets.</p>
+
+                    <hr />
+
+                    <!-- Section 4 -->
+                    <h2>4. Sorting Data with ORDER BY</h2>
+                    <p>ORDER BY allows you to sort the result set by one or more columns.</p>
+
+                    <h3>ORDER BY Syntax</h3>
+                    <p><strong>Use Case:</strong> Sort records in ascending or descending order.</p>
+                    <pre><code class="language-sql">
+SELECT *
+FROM Employees
+ORDER BY last_name ASC;
+
+SELECT *
+FROM Products
+ORDER BY price DESC;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Sorting helps in organizing data for reports and presentations.</p>
+
+                    <hr />
+
+                    <!-- Section 5 -->
+                    <h2>5. Limiting Results with LIMIT and OFFSET</h2>
+                    <p>LIMIT and OFFSET control the number of records returned by a query.</p>
+
+                    <h3>Using LIMIT</h3>
+                    <p><strong>Use Case:</strong> Retrieve a specific number of records.</p>
+                    <pre><code class="language-sql">
+SELECT *
+FROM Employees
+ORDER BY hire_date DESC
+LIMIT 5;
+                    </code></pre>
+
+                    <h3>Using OFFSET</h3>
+                    <p><strong>Use Case:</strong> Skip a specific number of records.</p>
+                    <pre><code class="language-sql">
+SELECT *
+FROM Employees
+ORDER BY last_name
+LIMIT 10 OFFSET 5;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Limiting results is useful for pagination and managing large result sets.</p>
+
+                    <hr />
+
+                    <!-- Section 6 -->
+                    <h2>6. Aggregate Functions and GROUP BY</h2>
+                    <p>Aggregate functions perform calculations on multiple rows of data.</p>
+
+                    <h3>Common Aggregate Functions</h3>
+                    <ul>
+                        <li><code>COUNT()</code>: Returns the number of rows.</li>
+                        <li><code>SUM()</code>: Calculates the total sum.</li>
+                        <li><code>AVG()</code>: Calculates the average value.</li>
+                        <li><code>MAX()</code> and <code>MIN()</code>: Find the highest and lowest values.</li>
+                    </ul>
+
+                    <h3>Using GROUP BY</h3>
+                    <p><strong>Use Case:</strong> Group rows that have the same values in specified columns.</p>
+                    <pre><code class="language-sql">
+SELECT department, COUNT(*) AS employee_count
+FROM Employees
+GROUP BY department;
+                    </code></pre>
+
+                    <h3>Filtering Groups with HAVING</h3>
+                    <p><strong>Use Case:</strong> Apply conditions to groups.</p>
+                    <pre><code class="language-sql">
+SELECT department, COUNT(*) AS employee_count
+FROM Employees
+GROUP BY department
+HAVING COUNT(*) > 5;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Aggregations help in summarizing data and deriving insights.</p>
+
+                    <hr />
+
+                    <!-- Section 7 -->
+                    <h2>7. Joining Tables</h2>
+                    <p>Joins combine rows from two or more tables based on related columns.</p>
+
+                    <h3>Inner Join</h3>
+                    <p><strong>Use Case:</strong> Retrieve records with matching values in both tables.</p>
+                    <pre><code class="language-sql">
+SELECT Orders.order_id, Customers.customer_name
+FROM Orders
+INNER JOIN Customers ON Orders.customer_id = Customers.customer_id;
+                    </code></pre>
+
+                    <h3>Left Join</h3>
+                    <p><strong>Use Case:</strong> Retrieve all records from the left table and matched records from the right table.</p>
+                    <pre><code class="language-sql">
+SELECT Employees.employee_id, Departments.department_name
+FROM Employees
+LEFT JOIN Departments ON Employees.department_id = Departments.department_id;
+                    </code></pre>
+
+                    <h3>Right Join</h3>
+                    <p><strong>Use Case:</strong> Retrieve all records from the right table and matched records from the left table.</p>
+                    <pre><code class="language-sql">
+SELECT Orders.order_id, Shippers.shipper_name
+FROM Orders
+RIGHT JOIN Shippers ON Orders.shipper_id = Shippers.shipper_id;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Joining tables is fundamental for working with normalized databases.</p>
+
+                    <hr />
+
+                    <!-- Section 8 -->
+                    <h2>8. Subqueries</h2>
+                    <p>Subqueries are nested queries used within another SQL query.</p>
+
+                    <h3>Subquery in WHERE Clause</h3>
+                    <p><strong>Use Case:</strong> Use the result of a query as a condition.</p>
+                    <pre><code class="language-sql">
+SELECT employee_id, name
+FROM Employees
+WHERE department_id = (
+    SELECT department_id
+    FROM Departments
+    WHERE department_name = 'Sales'
+);
+                    </code></pre>
+
+                    <h3>Subquery in FROM Clause</h3>
+                    <p><strong>Use Case:</strong> Use a subquery as a temporary table.</p>
+                    <pre><code class="language-sql">
+SELECT sub.department_name, sub.total_salary
+FROM (
+    SELECT department_id, SUM(salary) AS total_salary
+    FROM Employees
+    GROUP BY department_id
+) sub
+JOIN Departments ON sub.department_id = Departments.department_id;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Subqueries enable complex queries and data manipulation within a single statement.</p>
+
+                    <hr />
+
+                    <!-- Section 9 -->
+                    <h2>9. Inserting, Updating, and Deleting Data</h2>
+                    <p>Manipulate data within your database using INSERT, UPDATE, and DELETE statements.</p>
+
+                    <h3>INSERT Statement</h3>
+                    <p><strong>Use Case:</strong> Add new records to a table.</p>
+                    <pre><code class="language-sql">
+INSERT INTO Employees (employee_id, name, department)
+VALUES (101, 'John Doe', 'Marketing');
+                    </code></pre>
+
+                    <h3>UPDATE Statement</h3>
+                    <p><strong>Use Case:</strong> Modify existing records.</p>
+                    <pre><code class="language-sql">
+UPDATE Employees
+SET department = 'Sales'
+WHERE employee_id = 101;
+                    </code></pre>
+
+                    <h3>DELETE Statement</h3>
+                    <p><strong>Use Case:</strong> Remove records from a table.</p>
+                    <pre><code class="language-sql">
+DELETE FROM Employees
+WHERE employee_id = 101;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Data manipulation is essential for maintaining and updating databases.</p>
+
+                    <hr />
+
+                    <!-- Section 10 -->
+                    <h2>10. SQL Data Types and Constraints</h2>
+                    <p>Understanding data types and constraints ensures data integrity.</p>
+
+                    <h3>Common Data Types</h3>
+                    <ul>
+                        <li><strong>INT:</strong> Integer numbers.</li>
+                        <li><strong>VARCHAR(n):</strong> Variable-length character strings.</li>
+                        <li><strong>DATE:</strong> Date values.</li>
+                        <li><strong>DECIMAL(p, s):</strong> Decimal numbers with precision and scale.</li>
+                    </ul>
+
+                    <h3>Constraints</h3>
+                    <ul>
+                        <li><strong>PRIMARY KEY:</strong> Uniquely identifies each record.</li>
+                        <li><strong>FOREIGN KEY:</strong> Ensures referential integrity between tables.</li>
+                        <li><strong>NOT NULL:</strong> Ensures a column cannot have NULL values.</li>
+                        <li><strong>UNIQUE:</strong> Ensures all values in a column are unique.</li>
+                    </ul>
+
+                    <p><strong>Why It's Important:</strong> Proper data types and constraints prevent errors and maintain data quality.</p>
+
+                    <hr />
+
+                    <!-- Sample Interview Questions -->
+                    <h2>Sample Interview Questions</h2>
+
+                    <h3>Question 1: What is the difference between WHERE and HAVING clauses?</h3>
+                    <p><strong>Answer:</strong> The WHERE clause filters rows before aggregation occurs, while the HAVING clause filters groups after aggregation has taken place.</p>
+
+                    <hr />
+
+                    <h3>Question 2: How do you select unique values from a column?</h3>
+                    <p><strong>Answer:</strong> Use the DISTINCT keyword in the SELECT statement.</p>
+                    <pre><code class="language-sql">
+SELECT DISTINCT department
+FROM Employees;
+                    </code></pre>
+
+                    <hr />
+
+                    <h3>Question 3: What is a primary key and why is it important?</h3>
+                    <p><strong>Answer:</strong> A primary key is a column (or combination of columns) that uniquely identifies each row in a table. It is important for ensuring data integrity and enabling efficient data retrieval.</p>
+
+                    <hr />
+
+                    <!-- Conclusion -->
+                    <h2>Conclusion</h2>
+                    <p>This guide has covered the fundamental aspects of SQL, providing you with the tools to start querying and manipulating data. As you progress, practicing these basics will build a strong foundation for more advanced SQL techniques and data analysis tasks.</p>
+
+                    <hr />
+
+                    <!-- Additional Resources -->
+                    <h2>Additional Resources</h2>
+                    <ul>
+                        <li><strong>Books:</strong>
+                            <ul>
+                                <li><em>SQL in 10 Minutes, Sams Teach Yourself</em> by Ben Forta</li>
+                                <li><em>Head First SQL</em> by Lynn Beighley</li>
+                            </ul>
+                        </li>
+                        <li><strong>Online Tutorials:</strong>
+                            <ul>
+                                <li><a href="https://www.w3schools.com/sql/" target="_blank">W3Schools SQL Tutorial</a></li>
+                                <li><a href="https://www.codecademy.com/learn/learn-sql" target="_blank">Codecademy SQL Course</a></li>
+                            </ul>
+                        </li>
+                        <li><strong>Practice Platforms:</strong>
+                            <ul>
+                                <li><a href="https://www.hackerrank.com/domains/sql" target="_blank">HackerRank SQL Challenges</a></li>
+                                <li><a href="https://www.sqlbolt.com/" target="_blank">SQLBolt Interactive Lessons</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <hr />
+
+                    <!-- Author's Note -->
+                    <h2>Author's Note</h2>
+                    <p>Thank you for reading! I hope this guide has been helpful in your journey to learn SQL. If you have any questions or feedback, please feel free to reach out. Happy querying!</p>
+
+                    <!-- Back to Blogs -->
+                    <p><a href="../blogs.html">&larr; Back to Blogs</a></p>
+
+                </section>
+
+            </div>
+
+            <!-- Footer -->
+            <footer id="footer">
+                <section class="split contact">
+                    <section class="alt">
+                        <h3>Location</h3>
+                        <p>Brooklyn, NY<br /></p>
+                    </section>
+                    <section>
+                        <h3>Phone</h3>
+                        <p><a href="tel:+13127216988">(312) 721-6988</a></p>
+                    </section>
+                    <section>
+                        <h3>Email</h3>
+                        <p><a href="mailto:shudizhao923@gmail.com">shudizhao923@gmail.com</a></p>
+                    </section>
+                    <section>
+                        <h3>Social</h3>
+                        <ul class="icons alt">
+                            <li><a href="https://www.linkedin.com/in/shudi-zhao/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                            <li><a href="https://github.com/Shudi-Zhao" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                        </ul>
+                    </section>
+                </section>
+            </footer>
+
+            <!-- Copyright -->
+            <div id="copyright">
+                <ul><li>&copy; Shudi Zhao</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+            </div>
+
+        </div>
+
+        <!-- Scripts -->
+        <script src="../assets/js/jquery.min.js"></script>
+        <script src="../assets/js/jquery.scrollex.min.js"></script>
+        <script src="../assets/js/jquery.scrolly.min.js"></script>
+        <script src="../assets/js/browser.min.js"></script>
+        <script src="../assets/js/breakpoints.min.js"></script>
+        <script src="../assets/js/util.js"></script>
+        <script src="../assets/js/main.js"></script>
+
+        <!-- Syntax Highlighting JS (Optional) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-sql.min.js"></script>
+
+    </body>
+</html>

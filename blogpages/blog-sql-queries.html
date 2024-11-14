@@ -1,51 +1,456 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
     <head>
+        <!-- Title of the page -->
         <title>Mastering SQL Queries for Data Science Interviews - Shudi Zhao</title>
         <meta charset="utf-8" />
+        <!-- Responsive design meta tag -->
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+        <!-- Link to the main CSS file -->
         <link rel="stylesheet" href="../assets/css/main.css" />
+        <!-- Canonical link for SEO -->
         <link rel="canonical" href="https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blog-sql-queries.html" />
+        <!-- Fallback for browsers with JavaScript disabled -->
         <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+        <!-- Favicon and Apple touch icons -->
         <link rel="apple-touch-icon" sizes="180x180" href="../images/logo/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="../images/logo/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="../images/logo/favicon-16x16.png">
         <link rel="manifest" href="../images/logo/site.webmanifest">
-        <meta name="description" content="Dive deep into SQL queries that are essential for data manipulation and analysis." />
+        <!-- Meta description for SEO -->
+        <meta name="description" content="Enhance your SQL skills with advanced queries and techniques essential for data science interviews." />
+        <!-- Syntax Highlighting CSS (Optional) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" />
     </head>
     <body class="is-preload">
 
         <!-- Wrapper -->
-        <div id="wrapper">
+        <div id="wrapper" class="fade-in">
 
             <!-- Header -->
             <header id="header">
                 <a href="../index.html" class="logo">Shudi The Data Scientist</a>
             </header>
 
-            <!-- Nav -->
+            <!-- Navigation Menu -->
             <nav id="nav">
                 <ul class="links">
                     <li><a href="../index.html">Projects</a></li>
                     <li><a href="../aboutme.html">About Me</a></li>
                     <li class="active"><a href="../blogs.html">Blogs</a></li>
                 </ul>
+                <ul class="icons">
+                    <li><a href="https://www.linkedin.com/in/shudi-zhao/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="https://github.com/Shudi-Zhao" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                </ul>
             </nav>
 
-            <!-- Main -->
+            <!-- Main Content -->
             <div id="main">
 
                 <!-- Blog Post Section -->
                 <section class="post">
                     <header class="major">
                         <h1>Mastering SQL Queries for Data Science Interviews</h1>
-                        <p><em>Posted on [Upcoming] | Estimated Reading Time: TBD</em></p>
+                        <p><em>Posted on Nov 13, 2024 | Estimated Reading Time: 15 minutes</em></p>
                     </header>
 
-                    <!-- Content -->
-                    <h2>Coming Soon</h2>
-                    <p>We're working diligently to bring you a comprehensive guide on mastering SQL queries for data science interviews. This post will delve deep into essential SQL queries used for data manipulation and analysis.</p>
-                    <p>Stay tuned for updates!</p>
+                    <!-- Introduction -->
+                    <h2>Introduction</h2>
+                    <p>Structured Query Language (SQL) is a fundamental tool for data scientists. It allows you to interact with relational databases, extract insights, and prepare data for analysis. Mastering SQL is essential not only for day-to-day tasks but also for acing data science interviews. This guide covers advanced SQL queries and techniques that are commonly asked in technical interviews.</p>
+
+                    <hr />
+
+                    <!-- Content Sections -->
+
+                    <!-- Section 1 -->
+                    <h2>1. Understanding SQL Joins</h2>
+                    <p>SQL joins are used to combine rows from two or more tables based on related columns.</p>
+
+                    <h3>Inner Join</h3>
+                    <p><strong>Use Case:</strong> Retrieve records that have matching values in both tables.</p>
+                    <pre><code class="language-sql">
+SELECT *
+FROM TableA A
+INNER JOIN TableB B ON A.key = B.key;
+                    </code></pre>
+
+                    <h3>Left Join</h3>
+                    <p><strong>Use Case:</strong> Retrieve all records from the left table and matched records from the right table.</p>
+                    <pre><code class="language-sql">
+SELECT *
+FROM TableA A
+LEFT JOIN TableB B ON A.key = B.key;
+                    </code></pre>
+
+                    <h3>Right Join</h3>
+                    <p><strong>Use Case:</strong> Retrieve all records from the right table and matched records from the left table.</p>
+                    <pre><code class="language-sql">
+SELECT *
+FROM TableA A
+RIGHT JOIN TableB B ON A.key = B.key;
+                    </code></pre>
+
+                    <h3>Full Outer Join</h3>
+                    <p><strong>Use Case:</strong> Retrieve all records when there is a match in either left or right table.</p>
+                    <pre><code class="language-sql">
+SELECT *
+FROM TableA A
+FULL OUTER JOIN TableB B ON A.key = B.key;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Joins are fundamental in combining data from multiple tables, a common task in data analysis.</p>
+
+                    <hr />
+
+                    <!-- Section 2 -->
+                    <h2>2. Subqueries and Common Table Expressions (CTEs)</h2>
+                    <p>Subqueries and CTEs are used to break down complex queries and improve readability.</p>
+
+                    <h3>Subqueries</h3>
+                    <p><strong>Use Case:</strong> Nest a query within another SQL query.</p>
+                    <pre><code class="language-sql">
+SELECT employee_id, name
+FROM Employees
+WHERE department_id IN (
+    SELECT department_id
+    FROM Departments
+    WHERE location = 'New York'
+);
+                    </code></pre>
+
+                    <h3>Common Table Expressions (CTEs)</h3>
+                    <p><strong>Use Case:</strong> Define a temporary result set that can be referenced within a SELECT, INSERT, UPDATE, or DELETE statement.</p>
+                    <pre><code class="language-sql">
+WITH DepartmentEmployees AS (
+    SELECT department_id, COUNT(*) AS employee_count
+    FROM Employees
+    GROUP BY department_id
+)
+SELECT D.department_name, E.employee_count
+FROM Departments D
+JOIN DepartmentEmployees E ON D.department_id = E.department_id;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Subqueries and CTEs help in simplifying complex queries and making them more maintainable.</p>
+
+                    <hr />
+
+                    <!-- Section 3 -->
+                    <h2>3. Window Functions</h2>
+                    <p>Window functions perform calculations across a set of table rows related to the current row.</p>
+
+                    <h3>ROW_NUMBER()</h3>
+                    <p><strong>Use Case:</strong> Assign a unique sequential integer to rows within a partition.</p>
+                    <pre><code class="language-sql">
+SELECT employee_id, salary,
+       ROW_NUMBER() OVER (ORDER BY salary DESC) AS salary_rank
+FROM Employees;
+                    </code></pre>
+
+                    <h3>LAG() and LEAD()</h3>
+                    <p><strong>Use Case:</strong> Access data from a previous or next row in the same result set.</p>
+                    <pre><code class="language-sql">
+SELECT employee_id, salary,
+       LAG(salary, 1) OVER (ORDER BY salary) AS previous_salary,
+       LEAD(salary, 1) OVER (ORDER BY salary) AS next_salary
+FROM Employees;
+                    </code></pre>
+
+                    <h3>Aggregate Window Functions</h3>
+                    <p><strong>Use Case:</strong> Calculate aggregates like SUM, AVG over partitions.</p>
+                    <pre><code class="language-sql">
+SELECT department_id, employee_id, salary,
+       SUM(salary) OVER (PARTITION BY department_id) AS department_total_salary
+FROM Employees;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Window functions are powerful for performing advanced analytics directly in SQL.</p>
+
+                    <hr />
+
+                    <!-- Section 4 -->
+                    <h2>4. Advanced Filtering and Sorting</h2>
+                    <p>Enhance your queries with advanced WHERE clauses and ORDER BY techniques.</p>
+
+                    <h3>Using CASE Statements</h3>
+                    <p><strong>Use Case:</strong> Implement conditional logic in SQL queries.</p>
+                    <pre><code class="language-sql">
+SELECT employee_id, salary,
+       CASE
+           WHEN salary > 100000 THEN 'High'
+           WHEN salary BETWEEN 50000 AND 100000 THEN 'Medium'
+           ELSE 'Low'
+       END AS salary_level
+FROM Employees;
+                    </code></pre>
+
+                    <h3>Filtering with HAVING</h3>
+                    <p><strong>Use Case:</strong> Filter groups after aggregation.</p>
+                    <pre><code class="language-sql">
+SELECT department_id, COUNT(*) AS employee_count
+FROM Employees
+GROUP BY department_id
+HAVING COUNT(*) > 5;
+                    </code></pre>
+
+                    <h3>Advanced ORDER BY</h3>
+                    <p><strong>Use Case:</strong> Sort results based on expressions or multiple columns.</p>
+                    <pre><code class="language-sql">
+SELECT employee_id, department_id, salary
+FROM Employees
+ORDER BY department_id ASC, salary DESC;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Advanced filtering and sorting refine your data retrieval to meet specific analysis needs.</p>
+
+                    <hr />
+
+                    <!-- Section 5 -->
+                    <h2>5. Set Operations</h2>
+                    <p>Combine results from multiple queries using set operators.</p>
+
+                    <h3>UNION and UNION ALL</h3>
+                    <p><strong>Use Case:</strong> Combine results from two or more SELECT statements.</p>
+                    <pre><code class="language-sql">
+-- UNION removes duplicates
+SELECT employee_id FROM Employees_US
+UNION
+SELECT employee_id FROM Employees_UK;
+
+-- UNION ALL includes duplicates
+SELECT employee_id FROM Employees_US
+UNION ALL
+SELECT employee_id FROM Employees_UK;
+                    </code></pre>
+
+                    <h3>INTERSECT</h3>
+                    <p><strong>Use Case:</strong> Return records common to both queries.</p>
+                    <pre><code class="language-sql">
+SELECT employee_id FROM Employees_US
+INTERSECT
+SELECT employee_id FROM Employees_UK;
+                    </code></pre>
+
+                    <h3>EXCEPT (or MINUS)</h3>
+                    <p><strong>Use Case:</strong> Return records from the first query that are not in the second query.</p>
+                    <pre><code class="language-sql">
+SELECT employee_id FROM Employees_US
+EXCEPT
+SELECT employee_id FROM Employees_UK;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Set operations are useful for comparing datasets and performing data audits.</p>
+
+                    <hr />
+
+                    <!-- Section 6 -->
+                    <h2>6. Handling NULLs</h2>
+                    <p>Properly manage NULL values in your queries.</p>
+
+                    <h3>IS NULL and IS NOT NULL</h3>
+                    <p><strong>Use Case:</strong> Check for NULL values in conditions.</p>
+                    <pre><code class="language-sql">
+SELECT * FROM Employees
+WHERE manager_id IS NULL;
+                    </code></pre>
+
+                    <h3>COALESCE Function</h3>
+                    <p><strong>Use Case:</strong> Return the first non-NULL value in a list.</p>
+                    <pre><code class="language-sql">
+SELECT employee_id, COALESCE(phone, 'No Phone') AS contact_number
+FROM Employees;
+                    </code></pre>
+
+                    <h3>NULLIF Function</h3>
+                    <p><strong>Use Case:</strong> Return NULL if two expressions are equal.</p>
+                    <pre><code class="language-sql">
+SELECT employee_id, NULLIF(bonus, 0) AS adjusted_bonus
+FROM Employees;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Correct handling of NULLs prevents logical errors in queries and calculations.</p>
+
+                    <hr />
+
+                    <!-- Section 7 -->
+                    <h2>7. Date and Time Functions</h2>
+                    <p>Manipulate date and time data effectively.</p>
+
+                    <h3>Extracting Date Parts</h3>
+                    <p><strong>Use Case:</strong> Extract specific parts like year, month, or day from a date.</p>
+                    <pre><code class="language-sql">
+SELECT order_id, order_date,
+       EXTRACT(YEAR FROM order_date) AS order_year,
+       EXTRACT(MONTH FROM order_date) AS order_month
+FROM Orders;
+                    </code></pre>
+
+                    <h3>Date Arithmetic</h3>
+                    <p><strong>Use Case:</strong> Perform calculations with dates.</p>
+                    <pre><code class="language-sql">
+SELECT order_id, order_date,
+       order_date + INTERVAL '7 days' AS delivery_date
+FROM Orders;
+                    </code></pre>
+
+                    <h3>Datediff Function</h3>
+                    <p><strong>Use Case:</strong> Calculate the difference between two dates.</p>
+                    <pre><code class="language-sql">
+SELECT order_id, order_date, shipped_date,
+       DATEDIFF(day, order_date, shipped_date) AS days_to_ship
+FROM Orders;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Date functions are essential for time-based analyses like cohort studies and trend analysis.</p>
+
+                    <hr />
+
+                    <!-- Section 8 -->
+                    <h2>8. String Functions</h2>
+                    <p>Manipulate string data for cleaning and analysis.</p>
+
+                    <h3>Concatenation</h3>
+                    <p><strong>Use Case:</strong> Combine two or more strings.</p>
+                    <pre><code class="language-sql">
+SELECT first_name || ' ' || last_name AS full_name
+FROM Employees;
+                    </code></pre>
+
+                    <h3>Substring</h3>
+                    <p><strong>Use Case:</strong> Extract a substring from a string.</p>
+                    <pre><code class="language-sql">
+SELECT SUBSTRING(phone_number, 1, 3) AS area_code
+FROM Employees;
+                    </code></pre>
+
+                    <h3>Upper and Lower Case</h3>
+                    <p><strong>Use Case:</strong> Convert string to upper or lower case.</p>
+                    <pre><code class="language-sql">
+SELECT UPPER(first_name) AS first_name_caps
+FROM Employees;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> String manipulation is crucial for data cleaning and preparing data for analysis.</p>
+
+                    <hr />
+
+                    <!-- Section 9 -->
+                    <h2>9. Temporary Tables and Indexes</h2>
+                    <p>Optimize query performance using temporary tables and indexes.</p>
+
+                    <h3>Creating Temporary Tables</h3>
+                    <p><strong>Use Case:</strong> Store intermediate results for complex queries.</p>
+                    <pre><code class="language-sql">
+CREATE TEMPORARY TABLE TempSales AS
+SELECT * FROM Sales WHERE sale_date > '2024-01-01';
+                    </code></pre>
+
+                    <h3>Creating Indexes</h3>
+                    <p><strong>Use Case:</strong> Improve query performance on large tables.</p>
+                    <pre><code class="language-sql">
+CREATE INDEX idx_employee_last_name ON Employees(last_name);
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Understanding how to optimize queries is key for working with large datasets efficiently.</p>
+
+                    <hr />
+
+                    <!-- Section 10 -->
+                    <h2>10. Stored Procedures and Functions</h2>
+                    <p>Encapsulate SQL code for reuse and modularity.</p>
+
+                    <h3>Creating Stored Procedures</h3>
+                    <p><strong>Use Case:</strong> Execute a set of SQL statements as a single callable unit.</p>
+                    <pre><code class="language-sql">
+CREATE PROCEDURE GetEmployeesByDepartment(IN dept_id INT)
+BEGIN
+    SELECT * FROM Employees WHERE department_id = dept_id;
+END;
+                    </code></pre>
+
+                    <h3>Creating User-Defined Functions</h3>
+                    <p><strong>Use Case:</strong> Return a single value or table from a custom function.</p>
+                    <pre><code class="language-sql">
+CREATE FUNCTION GetEmployeeCountByDepartment(dept_id INT)
+RETURNS INT
+BEGIN
+    DECLARE emp_count INT;
+    SELECT COUNT(*) INTO emp_count FROM Employees WHERE department_id = dept_id;
+    RETURN emp_count;
+END;
+                    </code></pre>
+
+                    <p><strong>Why It's Important:</strong> Stored procedures and functions enhance code reuse and maintainability in complex SQL applications.</p>
+
+                    <hr />
+
+                    <!-- Sample Interview Questions -->
+                    <h2>Sample Interview Questions</h2>
+
+                    <h3>Question 1: How would you find the second highest salary from the Employees table?</h3>
+                    <p><strong>Answer:</strong> You can use the DENSE_RANK() window function to rank salaries and then select the salary with a rank of 2.</p>
+                    <pre><code class="language-sql">
+SELECT salary
+FROM (
+    SELECT salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS salary_rank
+    FROM Employees
+) ranked_salaries
+WHERE salary_rank = 2;
+                    </code></pre>
+
+                    <hr />
+
+                    <h3>Question 2: Explain the difference between WHERE and HAVING clauses.</h3>
+                    <p><strong>Answer:</strong> The WHERE clause filters rows before grouping and aggregation occur, whereas the HAVING clause filters groups after aggregation has taken place.</p>
+
+                    <hr />
+
+                    <h3>Question 3: How can you optimize a slow query in SQL?</h3>
+                    <p><strong>Answer:</strong> Several ways to optimize a slow query include:</p>
+                    <ul>
+                        <li>Creating indexes on columns used in JOINs and WHERE clauses.</li>
+                        <li>Refactoring subqueries into JOINs or vice versa, depending on the scenario.</li>
+                        <li>Limiting the dataset using WHERE clauses to retrieve only necessary data.</li>
+                        <li>Analyzing the query execution plan to identify bottlenecks.</li>
+                    </ul>
+
+                    <hr />
+
+                    <!-- Conclusion -->
+                    <h2>Conclusion</h2>
+                    <p>Mastering advanced SQL queries is essential for any data scientist. The techniques covered in this guide will help you tackle complex data manipulation tasks and impress in technical interviews. Practice these queries on real datasets to deepen your understanding and enhance your data analysis skills.</p>
+
+                    <hr />
+
+                    <!-- Additional Resources -->
+                    <h2>Additional Resources</h2>
+                    <ul>
+                        <li><strong>Books:</strong>
+                            <ul>
+                                <li><em>SQL for Data Scientists: A Beginner's Guide for Building Datasets for Analysis</em> by Renee M. P. Teate</li>
+                                <li><em>Learning SQL</em> by Alan Beaulieu</li>
+                            </ul>
+                        </li>
+                        <li><strong>Online Tutorials:</strong>
+                            <ul>
+                                <li><a href="https://www.sqltutorial.org/" target="_blank">SQL Tutorial</a></li>
+                                <li><a href="https://mode.com/sql-tutorial/introduction-to-sql/" target="_blank">Mode Analytics SQL Tutorial</a></li>
+                            </ul>
+                        </li>
+                        <li><strong>Practice Platforms:</strong>
+                            <ul>
+                                <li><a href="https://www.hackerrank.com/domains/sql" target="_blank">HackerRank SQL Challenges</a></li>
+                                <li><a href="https://www.leetcode.com/problemset/database/" target="_blank">LeetCode Database Problems</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <hr />
+
+                    <!-- Author's Note -->
+                    <h2>Author's Note</h2>
+                    <p>Thank you for reading! If you have any questions or comments, feel free to reach out. Good luck with your data science journey and interview preparations.</p>
 
                     <!-- Back to Blogs -->
                     <p><a href="../blogs.html">&larr; Back to Blogs</a></p>
@@ -79,6 +484,11 @@
                 </section>
             </footer>
 
+            <!-- Copyright -->
+            <div id="copyright">
+                <ul><li>&copy; Shudi Zhao</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+            </div>
+
         </div>
 
         <!-- Scripts -->
@@ -89,6 +499,10 @@
         <script src="../assets/js/breakpoints.min.js"></script>
         <script src="../assets/js/util.js"></script>
         <script src="../assets/js/main.js"></script>
+
+        <!-- Syntax Highlighting JS (Optional) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-sql.min.js"></script>
 
     </body>
 </html>
