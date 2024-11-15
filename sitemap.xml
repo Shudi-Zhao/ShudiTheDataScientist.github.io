@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/index.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/aboutme.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blogs.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blogpages/blog-python-essentials.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blogpages/blog-pandas-techniques.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blogpages/blog-data-visualization.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blogpages/blog-python-best-practices.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blogpages/blog-sql-basics.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blogpages/blog-sql-queries.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blogpages/blog-ml-basics.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blogpages/blog-ml-algorithms-comparison.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blogpages/blog-deep-learning-basics.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blogpages/blog-statistical-concepts.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blogpages/blog-ab-testing.html</loc>
+  <lastmod>2024-11-15T22:39:31+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>
