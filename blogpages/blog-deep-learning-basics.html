@@ -1,51 +1,381 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
     <head>
+        <!-- Title of the page -->
         <title>Deep Learning Basics for Aspiring Data Scientists - Shudi Zhao</title>
         <meta charset="utf-8" />
+        <!-- Responsive design meta tag -->
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+        <!-- Link to the main CSS file -->
         <link rel="stylesheet" href="../assets/css/main.css" />
+        <!-- Canonical link for SEO -->
         <link rel="canonical" href="https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/blog-deep-learning-basics.html" />
+        <!-- Fallback for browsers with JavaScript disabled -->
         <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+        <!-- Favicon and Apple touch icons -->
         <link rel="apple-touch-icon" sizes="180x180" href="../images/logo/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="../images/logo/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="../images/logo/favicon-16x16.png">
         <link rel="manifest" href="../images/logo/site.webmanifest">
-        <meta name="description" content="Discover the fundamentals of deep learning and neural networks." />
+        <!-- Meta description for SEO -->
+        <meta name="description" content="An in-depth introduction to deep learning, covering fundamental concepts, neural network architectures, training techniques, and practical applications for aspiring data scientists." />
+        <!-- Syntax Highlighting CSS (Optional) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" />
     </head>
     <body class="is-preload">
 
         <!-- Wrapper -->
-        <div id="wrapper">
+        <div id="wrapper" class="fade-in">
 
             <!-- Header -->
             <header id="header">
+                <!-- Logo linking back to home page -->
                 <a href="../index.html" class="logo">Shudi The Data Scientist</a>
             </header>
 
-            <!-- Nav -->
+            <!-- Navigation Menu -->
             <nav id="nav">
                 <ul class="links">
                     <li><a href="../index.html">Projects</a></li>
                     <li><a href="../aboutme.html">About Me</a></li>
                     <li class="active"><a href="../blogs.html">Blogs</a></li>
                 </ul>
+                <ul class="icons">
+                    <li><a href="https://www.linkedin.com/in/shudi-zhao/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="https://github.com/Shudi-Zhao" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                </ul>
             </nav>
 
-            <!-- Main -->
+            <!-- Main Content -->
             <div id="main">
 
                 <!-- Blog Post Section -->
                 <section class="post">
                     <header class="major">
+                        <!-- Blog post title and metadata -->
                         <h1>Deep Learning Basics for Aspiring Data Scientists</h1>
-                        <p><em>Posted on [Upcoming] | Estimated Reading Time: TBD</em></p>
+                        <p><em>Posted on Nov 18, 2024 | Estimated Reading Time: 30 minutes</em></p>
                     </header>
 
-                    <!-- Content -->
-                    <h2>Coming Soon</h2>
-                    <p>We're excited to present a foundational guide on deep learning basics for aspiring data scientists. This post will introduce you to neural networks and key concepts in deep learning.</p>
-                    <p>Stay tuned for updates!</p>
+                    <!-- Introduction -->
+                    <h2>Introduction</h2>
+                    <p>Deep learning is a subset of machine learning that has revolutionized various fields such as computer vision, natural language processing, and speech recognition. As an aspiring data scientist, understanding the fundamentals of deep learning is essential. This guide will walk you through the core concepts, neural network architectures, training techniques, and practical tips to get you started on your deep learning journey.</p>
+
+                    <hr />
+
+                    <!-- Section 1 -->
+                    <h2>1. What is Deep Learning?</h2>
+                    <p>Deep learning involves training artificial neural networks with multiple layers to learn hierarchical representations of data. It enables models to learn complex patterns and representations from large amounts of data.</p>
+
+                    <h3>Key Characteristics</h3>
+                    <ul>
+                        <li><strong>Multiple Layers:</strong> Deep networks consist of several layers that transform inputs into outputs through learned weights.</li>
+                        <li><strong>Representation Learning:</strong> Automatically discovers the representations needed for feature detection or classification.</li>
+                        <li><strong>End-to-End Learning:</strong> Learns directly from raw data to output without manual feature extraction.</li>
+                    </ul>
+
+                    <p><strong>Why It's Important:</strong> Deep learning models have achieved state-of-the-art results in various domains, making it a critical area of study in data science.</p>
+
+                    <hr />
+
+                    <!-- Section 2 -->
+                    <h2>2. Neural Networks Basics</h2>
+                    <p>At the core of deep learning are neural networks, inspired by the human brain's interconnected neurons.</p>
+
+                    <!-- Subsection: Perceptron -->
+                    <h3>2.1 Perceptron</h3>
+                    <p>The perceptron is the simplest type of artificial neuron, which computes a weighted sum of its inputs and passes it through an activation function.</p>
+                    <pre><code class="language-python">
+def perceptron(x, w, b):
+    z = np.dot(w, x) + b
+    return activation_function(z)
+                    </code></pre>
+
+                    <!-- Subsection: Activation Functions -->
+                    <h3>2.2 Activation Functions</h3>
+                    <p>Activation functions introduce non-linearity into the network, allowing it to learn complex patterns.</p>
+                    <h4>Common Activation Functions</h4>
+                    <ul>
+                        <li><strong>Sigmoid:</strong> Used in binary classification.
+                            <pre><code class="language-python">
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
+                            </code></pre>
+                        </li>
+                        <li><strong>ReLU (Rectified Linear Unit):</strong> Commonly used in hidden layers.
+                            <pre><code class="language-python">
+def relu(z):
+    return np.maximum(0, z)
+                            </code></pre>
+                        </li>
+                        <li><strong>Softmax:</strong> Used in multi-class classification.
+                            <pre><code class="language-python">
+def softmax(z):
+    exp_z = np.exp(z - np.max(z))
+    return exp_z / exp_z.sum(axis=0)
+                            </code></pre>
+                        </li>
+                    </ul>
+
+                    <!-- Subsection: Forward and Backpropagation -->
+                    <h3>2.3 Forward and Backpropagation</h3>
+                    <p><strong>Forward Propagation:</strong> The process of passing inputs through the network to get the output.</p>
+                    <p><strong>Backpropagation:</strong> The method used to calculate the gradient of the loss function with respect to the network's weights, allowing for weight updates.</p>
+
+                    <hr />
+
+                    <!-- Section 3 -->
+                    <h2>3. Types of Neural Networks</h2>
+                    <p>Different neural network architectures are suited for various types of data and tasks.</p>
+
+                    <!-- Subsection: Feedforward Neural Networks -->
+                    <h3>3.1 Feedforward Neural Networks</h3>
+                    <p>The simplest form of neural networks where connections do not form cycles.</p>
+                    <p><strong>Use Cases:</strong> General-purpose tasks, structured data.</p>
+
+                    <!-- Subsection: Convolutional Neural Networks (CNNs) -->
+                    <h3>3.2 Convolutional Neural Networks (CNNs)</h3>
+                    <p>CNNs are specialized for processing data with a grid-like topology, such as images.</p>
+                    <h4>Key Components:</h4>
+                    <ul>
+                        <li><strong>Convolutional Layers:</strong> Apply filters to input data to detect features.</li>
+                        <li><strong>Pooling Layers:</strong> Reduce spatial dimensions to decrease computational load.</li>
+                        <li><strong>Fully Connected Layers:</strong> Combine features for classification or regression tasks.</li>
+                    </ul>
+                    <p><strong>Use Cases:</strong> Image classification, object detection, image segmentation.</p>
+
+                    <!-- Subsection: Recurrent Neural Networks (RNNs) -->
+                    <h3>3.3 Recurrent Neural Networks (RNNs)</h3>
+                    <p>RNNs are designed to handle sequential data by maintaining a hidden state that captures information from previous inputs.</p>
+                    <p><strong>Use Cases:</strong> Time series analysis, natural language processing, speech recognition.</p>
+
+                    <!-- Subsection: Long Short-Term Memory Networks (LSTMs) -->
+                    <h3>3.4 Long Short-Term Memory Networks (LSTMs)</h3>
+                    <p>LSTMs are a type of RNN that can learn long-term dependencies by addressing the vanishing gradient problem.</p>
+                    <p><strong>Use Cases:</strong> Text generation, language translation, speech recognition.</p>
+
+                    <!-- Subsection: Autoencoders -->
+                    <h3>3.5 Autoencoders</h3>
+                    <p>Autoencoders are neural networks used for unsupervised learning of efficient codings.</p>
+                    <p><strong>Components:</strong></p>
+                    <ul>
+                        <li><strong>Encoder:</strong> Compresses the input into a latent-space representation.</li>
+                        <li><strong>Decoder:</strong> Reconstructs the input from the latent representation.</li>
+                    </ul>
+                    <p><strong>Use Cases:</strong> Dimensionality reduction, anomaly detection, denoising data.</p>
+
+                    <!-- Subsection: Generative Adversarial Networks (GANs) -->
+                    <h3>3.6 Generative Adversarial Networks (GANs)</h3>
+                    <p>GANs consist of two networks, a generator and a discriminator, that compete against each other.</p>
+                    <p><strong>Use Cases:</strong> Image generation, data augmentation, style transfer.</p>
+
+                    <hr />
+
+                    <!-- Section 4 -->
+                    <h2>4. Training Neural Networks</h2>
+                    <p>Training involves optimizing the network's weights to minimize a loss function.</p>
+
+                    <!-- Subsection: Loss Functions -->
+                    <h3>4.1 Loss Functions</h3>
+                    <p><strong>Purpose:</strong> Measure how well the model's predictions match the actual data.</p>
+                    <h4>Common Loss Functions:</h4>
+                    <ul>
+                        <li><strong>Mean Squared Error (MSE):</strong> Used for regression tasks.</li>
+                        <li><strong>Cross-Entropy Loss:</strong> Used for classification tasks.</li>
+                    </ul>
+
+                    <!-- Subsection: Optimization Algorithms -->
+                    <h3>4.2 Optimization Algorithms</h3>
+                    <p>Optimization algorithms adjust the weights to minimize the loss function.</p>
+                    <h4>Common Algorithms:</h4>
+                    <ul>
+                        <li><strong>Gradient Descent:</strong> Basic algorithm that updates weights by subtracting a fraction of the gradient.</li>
+                        <li><strong>Stochastic Gradient Descent (SGD):</strong> Uses a single or a few samples to compute the gradient, speeding up computation.</li>
+                        <li><strong>Adam Optimizer:</strong> Combines momentum and adaptive learning rates for efficient optimization.
+                            <pre><code class="language-python">
+optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
+                            </code></pre>
+                        </li>
+                    </ul>
+
+                    <!-- Subsection: Regularization Techniques -->
+                    <h3>4.3 Regularization Techniques</h3>
+                    <p>Regularization helps prevent overfitting by adding constraints to the learning process.</p>
+                    <h4>Common Techniques:</h4>
+                    <ul>
+                        <li><strong>Dropout:</strong> Randomly sets a fraction of input units to 0 at each update during training.
+                            <pre><code class="language-python">
+model.add(tf.keras.layers.Dropout(0.5))
+                            </code></pre>
+                        </li>
+                        <li><strong>Batch Normalization:</strong> Normalizes the inputs of each layer to stabilize learning.
+                            <pre><code class="language-python">
+model.add(tf.keras.layers.BatchNormalization())
+                            </code></pre>
+                        </li>
+                        <li><strong>Early Stopping:</strong> Stops training when performance on a validation set begins to degrade.</li>
+                    </ul>
+
+                    <hr />
+
+                    <!-- Section 5 -->
+                    <h2>5. Overfitting and Underfitting</h2>
+                    <p>Understanding and addressing overfitting and underfitting is crucial for building effective models.</p>
+
+                    <!-- Subsection: Overfitting -->
+                    <h3>5.1 Overfitting</h3>
+                    <p><strong>Definition:</strong> The model learns the training data too well, including noise, and performs poorly on new data.</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul>
+                        <li>Use regularization techniques.</li>
+                        <li>Gather more training data.</li>
+                        <li>Reduce model complexity.</li>
+                    </ul>
+
+                    <!-- Subsection: Underfitting -->
+                    <h3>5.2 Underfitting</h3>
+                    <p><strong>Definition:</strong> The model is too simple to capture the underlying patterns in the data.</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul>
+                        <li>Increase model complexity.</li>
+                        <li>Feature engineering.</li>
+                        <li>Reduce regularization.</li>
+                    </ul>
+
+                    <hr />
+
+                    <!-- Section 6 -->
+                    <h2>6. Hyperparameter Tuning</h2>
+                    <p>Hyperparameters are settings that govern the training process and model architecture.</p>
+                    <h3>Common Hyperparameters:</h3>
+                    <ul>
+                        <li>Learning Rate</li>
+                        <li>Number of Layers and Neurons</li>
+                        <li>Batch Size</li>
+                        <li>Activation Functions</li>
+                        <li>Optimizer Choice</li>
+                    </ul>
+                    <p><strong>Tuning Methods:</strong></p>
+                    <ul>
+                        <li>Grid Search</li>
+                        <li>Random Search</li>
+                        <li>Bayesian Optimization</li>
+                    </ul>
+
+                    <hr />
+
+                    <!-- Section 7 -->
+                    <h2>7. Deep Learning Frameworks</h2>
+                    <p>Frameworks simplify the implementation of deep learning models.</p>
+
+                    <!-- Subsection: TensorFlow -->
+                    <h3>7.1 TensorFlow</h3>
+                    <p>An open-source library developed by Google for numerical computation and large-scale machine learning.</p>
+                    <p><strong>Features:</strong></p>
+                    <ul>
+                        <li>Supports both low-level and high-level APIs.</li>
+                        <li>TensorBoard for visualization.</li>
+                        <li>Extensive community and resources.</li>
+                    </ul>
+
+                    <!-- Subsection: PyTorch -->
+                    <h3>7.2 PyTorch</h3>
+                    <p>An open-source machine learning library developed by Facebook's AI Research lab.</p>
+                    <p><strong>Features:</strong></p>
+                    <ul>
+                        <li>Dynamic computation graphs.</li>
+                        <li>Strong support for GPU acceleration.</li>
+                        <li>Popular in research settings.</li>
+                    </ul>
+
+                    <!-- Subsection: Keras -->
+                    <h3>7.3 Keras</h3>
+                    <p>A high-level neural networks API that runs on top of TensorFlow, CNTK, or Theano.</p>
+                    <p><strong>Features:</strong></p>
+                    <ul>
+                        <li>User-friendly and modular.</li>
+                        <li>Enables quick prototyping.</li>
+                        <li>Integrates seamlessly with TensorFlow 2.x.</li>
+                    </ul>
+
+                    <hr />
+
+                    <!-- Section 8 -->
+                    <h2>8. Practical Tips</h2>
+                    <p>Applying deep learning effectively requires attention to practical considerations.</p>
+
+                    <!-- Subsection: Data Preprocessing -->
+                    <h3>8.1 Data Preprocessing</h3>
+                    <p><strong>Steps:</strong></p>
+                    <ul>
+                        <li>Normalize or standardize data.</li>
+                        <li>Handle missing values.</li>
+                        <li>Augment data to increase diversity.</li>
+                    </ul>
+
+                    <!-- Subsection: Dealing with Imbalanced Data -->
+                    <h3>8.2 Dealing with Imbalanced Data</h3>
+                    <p><strong>Techniques:</strong></p>
+                    <ul>
+                        <li>Resampling methods (oversampling, undersampling).</li>
+                        <li>Use of appropriate evaluation metrics (e.g., precision-recall curve).</li>
+                        <li>Synthetic data generation (e.g., SMOTE).</li>
+                    </ul>
+
+                    <hr />
+
+                    <!-- Sample Interview Questions -->
+                    <h2>Sample Interview Questions</h2>
+
+                    <h3>Question 1: What is the vanishing gradient problem, and how is it addressed?</h3>
+                    <p><strong>Answer:</strong> The vanishing gradient problem occurs when gradients become too small during backpropagation, preventing the weights from updating effectively. It is addressed using techniques like LSTM networks, ReLU activation functions, and batch normalization.</p>
+
+                    <hr />
+
+                    <h3>Question 2: Explain the difference between batch gradient descent and stochastic gradient descent.</h3>
+                    <p><strong>Answer:</strong> Batch gradient descent computes gradients using the entire dataset, which can be slow. Stochastic gradient descent updates weights using one sample at a time, introducing noise but speeding up computation. Mini-batch gradient descent uses a subset of samples, balancing speed and stability.</p>
+
+                    <hr />
+
+                    <h3>Question 3: What is dropout, and why is it used?</h3>
+                    <p><strong>Answer:</strong> Dropout is a regularization technique where randomly selected neurons are ignored during training. It prevents overfitting by reducing interdependent learning among neurons, forcing the network to learn more robust features.</p>
+
+                    <hr />
+
+                    <!-- Conclusion -->
+                    <h2>Conclusion</h2>
+                    <p>This guide has covered the fundamental aspects of deep learning, from basic neural network concepts to advanced architectures and training techniques. As you delve deeper, hands-on practice and experimentation with different models and datasets will enhance your understanding and skills in deep learning.</p>
+
+                    <hr />
+
+                    <!-- Additional Resources -->
+                    <h2>Additional Resources</h2>
+                    <ul>
+                        <li><strong>Books:</strong>
+                            <ul>
+                                <li><em>Deep Learning</em> by Ian Goodfellow, Yoshua Bengio, and Aaron Courville</li>
+                                <li><em>Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow</em> by Aurélien Géron</li>
+                            </ul>
+                        </li>
+                        <li><strong>Online Courses:</strong>
+                            <ul>
+                                <li><a href="https://www.coursera.org/specializations/deep-learning" target="_blank">Deep Learning Specialization by Andrew Ng on Coursera</a></li>
+                                <li><a href="https://www.udacity.com/course/intro-to-deep-learning-with-pytorch--ud188" target="_blank">Intro to Deep Learning with PyTorch by Udacity</a></li>
+                            </ul>
+                        </li>
+                        <li><strong>Practice Platforms:</strong>
+                            <ul>
+                                <li><a href="https://www.kaggle.com/" target="_blank">Kaggle Competitions and Datasets</a></li>
+                                <li><a href="https://www.tensorflow.org/tutorials" target="_blank">TensorFlow Tutorials</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <hr />
+
+                    <!-- Author's Note -->
+                    <h2>Author's Note</h2>
+                    <p>Thank you for reading! I hope this guide has provided a solid foundation in deep learning basics. If you have any questions or feedback, please feel free to reach out. Keep learning and exploring!</p>
 
                     <!-- Back to Blogs -->
                     <p><a href="../blogs.html">&larr; Back to Blogs</a></p>
@@ -79,6 +409,11 @@
                 </section>
             </footer>
 
+            <!-- Copyright -->
+            <div id="copyright">
+                <ul><li>&copy; Shudi Zhao</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+            </div>
+
         </div>
 
         <!-- Scripts -->
@@ -89,6 +424,10 @@
         <script src="../assets/js/breakpoints.min.js"></script>
         <script src="../assets/js/util.js"></script>
         <script src="../assets/js/main.js"></script>
+
+        <!-- Syntax Highlighting JS (Optional) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js"></script>
 
     </body>
 </html>
