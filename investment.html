@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Data Display - Multiple Sheets</title>
+    <!-- Include SheetJS (XLSX) from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #excel-tables table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        #excel-tables th, #excel-tables td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        #excel-tables th {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Excel Data Display (Multiple Sheets)</h1>
+<p>Displaying all sheets from <code>Tickers_YTD_Returns.xlsx</code> below:</p>
+<div id="excel-tables">Loading data, please wait...</div>
+
+<script>
+(async function() {
+    try {
+        // Fetch the Excel file
+        const response = await fetch('Tickers_YTD_Returns.xlsx');
+        if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.statusText);
+        }
+        const arrayBuffer = await response.arrayBuffer();
+
+        // Parse the Excel file using SheetJS
+        const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+
+        // Get the container where tables will be displayed
+        const container = document.getElementById('excel-tables');
+        container.innerHTML = ''; // Clear any "Loading..." text
+
+        // Iterate over each sheet in the workbook
+        workbook.SheetNames.forEach(sheetName => {
+            const worksheet = workbook.Sheets[sheetName];
+
+            // Convert worksheet to HTML table
+            const htmlTable = XLSX.utils.sheet_to_html(worksheet, { editable: false });
+
+            // Create a section for this sheet
+            const section = document.createElement('div');
+            section.innerHTML = `<h3>${sheetName}</h3>${htmlTable}`;
+
+            // Append to container
+            container.appendChild(section);
+        });
+
+    } catch (error) {
+        console.error("Error loading Excel file:", error);
+        document.getElementById('excel-tables').innerHTML = "<p>Error loading data. Check the console for details.</p>";
+    }
+})();
+</script>
+
+</body>
+</html>

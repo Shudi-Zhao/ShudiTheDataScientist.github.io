@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Data Visualization - Line Charts & Bar Chart</title>
+    <!-- Include SheetJS (XLSX) from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- Include D3.js from CDN -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Include Chart.js from CDN for bar chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chart-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between; /* Space between the charts */
+        }
+        .chart-container {
+            width: 50vw; /* Each chart takes 50% of the viewport width */
+            height: 500px; /* Fixed height */
+            position: relative;
+        }
+        .chart-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        /* Bar chart container and dropdown */
+        #bar-chart-section {
+            margin-top: 40px;
+        }
+        #bar-chart-section h2 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Excel Data Visualization</h1>
+<div id="chart-wrapper">
+    <div class="chart-container" id="chart-container-1"></div>
+    <div class="chart-container" id="chart-container-2"></div>
+</div>
+
+<div id="bar-chart-section">
+    <h2>Filter by Ticker to View YTD Metrics</h2>
+    <select id="ticker-select">
+        <option value="">--Select a Ticker--</option>
+    </select>
+    <div style="width:600px; margin-top:20px;">
+        <canvas id="barChartCanvas" width="600" height="400"></canvas>
+    </div>
+</div>
+
+<script>
+(async function() {
+    try {
+        // Fetch the Excel file
+        const response = await fetch('Tickers_YTD_Returns.xlsx');
+        if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.statusText);
+        }
+        const arrayBuffer = await response.arrayBuffer();
+
+        // Parse the Excel file using SheetJS
+        const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+
+        // Create two line charts for Sheet1 and Sheet2
+        const createLineChart = (chartId, sheetIndex) => {
+            const sheetName = workbook.SheetNames[sheetIndex];
+            const worksheet = workbook.Sheets[sheetName];
+            const data = XLSX.utils.sheet_to_json(worksheet);
+
+            // Prepare data for the line chart
+            // Assuming "Ticker" and "Price Change YTD (%)" columns exist
+            const chartData = data.map(row => ({
+                label: row["Ticker"],
+                value: row["Price Change YTD (%)"]
+            }));
+
+            const chartContainer = document.getElementById(chartId);
+            const containerWidth = chartContainer.offsetWidth;
+            const margin = { top: 40, right: 30, bottom: 60, left: 70 };
+            const width = containerWidth - margin.left - margin.right;
+            const height = 400 - margin.top - margin.bottom;
+
+            const svg = d3.select(`#${chartId}`)
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const x = d3.scalePoint()
+                .domain(chartData.map(d => d.label))
+                .range([0, width])
+                .padding(0.5);
+
+            const y = d3.scaleLinear()
+                .domain([d3.min(chartData, d => d.value)*0.9, d3.max(chartData, d => d.value)*1.1])
+                .nice()
+                .range([height, 0]);
+
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("transform", "rotate(-45)")
+                .style("text-anchor", "end");
+
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            const line = d3.line()
+                .x(d => x(d.label))
+                .y(d => y(d.value));
+
+            // Draw the line
+            svg.append("path")
+                .datum(chartData)
+                .attr("fill", "none")
+                .attr("stroke", "steelblue")
+                .attr("stroke-width", 2)
+                .attr("d", line);
+
+            // Add data points
+            svg.selectAll(".dot")
+                .data(chartData)
+                .enter()
+                .append("circle")
+                .attr("cx", d => x(d.label))
+                .attr("cy", d => y(d.value))
+                .attr("r", 4)
+                .attr("fill", "steelblue");
+
+            // Add text labels for each data point
+            svg.selectAll(".label")
+                .data(chartData)
+                .enter()
+                .append("text")
+                .attr("x", d => x(d.label))
+                .attr("y", d => y(d.value) - 10)
+                .attr("text-anchor", "middle")
+                .style("font-size", "12px")
+                .attr("fill", "black")
+                .text(d => `${d.value.toFixed(2)}%`);
+
+            // Add Chart Title
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", -margin.top / 2)
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
+                .text(`Price Change YTD (%) for ${sheetName}`);
+
+            // Add X-axis Label
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", height + margin.bottom - 10)
+                .attr("text-anchor", "middle")
+                .style("font-size", "14px")
+                .text("Tickers");
+
+            // Add Y-axis Label
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("x", -height / 2)
+                .attr("y", -margin.left + 15)
+                .attr("text-anchor", "middle")
+                .style("font-size", "14px")
+                .text("Price Change YTD (%)");
+        };
+
+        // Create the line charts for sheet 0 and sheet 1 (if available)
+        if (workbook.SheetNames.length > 0) createLineChart("chart-container-1", 0);
+        if (workbook.SheetNames.length > 1) createLineChart("chart-container-2", 1);
+
+        // Now, for the bar chart with filter:
+        // We'll use the first sheet to get ticker info and four metrics
+        const firstSheetName = workbook.SheetNames[0];
+        const firstWorksheet = workbook.Sheets[firstSheetName];
+        const jsonData = XLSX.utils.sheet_to_json(firstWorksheet);
+
+        // Assuming columns: "Ticker", "Price Change YTD (%)", "Dividend Yield YTD (%)", "Unadjusted Total YTD (%)", "Adjusted Total YTD (%)"
+        const tickerColumn = "Ticker";
+        const priceChangeCol = "Price Change YTD (%)";
+        const dividendYieldCol = "Dividend Yield YTD (%)";
+        const unadjustedCol = "Unadjusted Total YTD (%)";
+        const adjustedCol = "Adjusted Total YTD (%)";
+
+        let dataByTicker = {};
+        let tickers = [];
+
+        jsonData.forEach(row => {
+            const t = row[tickerColumn];
+            if (t) {
+                tickers.push(t);
+                dataByTicker[t] = {
+                    priceChange: parseFloat(row[priceChangeCol]) || 0,
+                    dividendYield: parseFloat(row[dividendYieldCol]) || 0,
+                    unadjusted: parseFloat(row[unadjustedCol]) || 0,
+                    adjusted: parseFloat(row[adjustedCol]) || 0
+                };
+            }
+        });
+
+        tickers = [...new Set(tickers)]; // Unique tickers
+
+        // Populate the dropdown
+        const tickerSelect = document.getElementById('ticker-select');
+        tickers.forEach(t => {
+            const opt = document.createElement('option');
+            opt.value = t;
+            opt.textContent = t;
+            tickerSelect.appendChild(opt);
+        });
+
+        // Set up Chart.js bar chart
+        const barCtx = document.getElementById('barChartCanvas').getContext('2d');
+        const barChart = new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Price Change YTD (%)', 'Dividend Yield YTD (%)', 'Unadjusted Total YTD (%)', 'Adjusted Total YTD (%)'],
+                datasets: [{
+                    label: 'YTD Metrics',
+                    data: [0,0,0,0],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: 'YTD Metrics for Selected Ticker'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        tickerSelect.addEventListener('change', () => {
+            const selectedTicker = tickerSelect.value;
+            if (!selectedTicker) {
+                barChart.data.datasets[0].data = [0,0,0,0];
+                barChart.options.plugins.title.text = 'YTD Metrics for Selected Ticker';
+                barChart.update();
+                return;
+            }
+
+            const d = dataByTicker[selectedTicker];
+            if (d) {
+                barChart.data.datasets[0].data = [d.priceChange, d.dividendYield, d.unadjusted, d.adjusted];
+                barChart.options.plugins.title.text = `YTD Metrics for ${selectedTicker}`;
+                barChart.update();
+            }
+        });
+
+    } catch (error) {
+        console.error("Error loading Excel file:", error);
+        document.getElementById('chart-wrapper').innerHTML = "<p>Error loading data. Check the console for details.</p>";
+    }
+})();
+</script>
+
+</body>
+</html>
