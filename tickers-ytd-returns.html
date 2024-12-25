@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YTD Return Analysis for Selected Tickers</title>
+
+  <!-- 1. Include DataTables CSS (for sorting/filter UI) -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+  
+  <!-- Include SheetJS (XLSX) -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <!-- 2. Include jQuery and DataTables JS -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  
+  <style>
+    /* Example header styling */
+    header {
+        display: flex;
+        justify-content: flex-end;  /* Right-align the logo text */
+        align-items: center;        /* Vertically center the logo text */
+        padding: 10px 20px;
+        background-color: #f2f2f2;  /* Optional background color for the header */
+        }
+        .logo-text {
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #333;
+        }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      color: #333;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    h3 {
+      margin-top: 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse; /* Keep for nice horizontal lines */
+      margin: 20px 0;
+    }
+    /* Remove vertical lines; keep horizontal lines */
+    th, td {
+      border-left: none;
+      border-right: none;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: black;
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc; /* Horizontal line at bottom of header row */
+    }
+    td {
+      border-bottom: 1px solid #ccc; /* Horizontal line below each row */
+    }
+    tr:hover {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header with right-aligned text logo -->
+  <header>
+    <div class="logo-text">CW Capital Data Vidualization</div>
+  </header>
+
+  <!-- Main Heading -->
+  <h1>Tickers YTD Returns</h1>
+
+  <!-- Intro Paragraph -->
+  <p>
+    This page displays year-to-date (YTD) return metrics for two groups of tickers. All data is fetched from Yahoo Finance.
+  </p>
+
+  <p>
+    The first group, <strong>Covered Call &amp; MLP Tickers</strong>, includes a mix of ETFs
+    focused on income strategies.
+  </p>
+
+  <p>
+    The second group, <strong>Global &amp; Diversified Tickers</strong>, consists of broader
+    funds and international holdings.
+  </p>
+
+  <div id="excel-tables">Loading data, please wait...</div>
+
+  <script>
+    (async function() {
+      try {
+        const response = await fetch('Tickers_YTD_Returns.xlsx');
+        if (!response.ok) {
+          throw new Error('Network response was not ok: ' + response.statusText);
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+        const container = document.getElementById('excel-tables');
+
+        // Clear "Loading..." text
+        container.innerHTML = '';
+
+        // We'll keep track of a counter to give each table a unique ID
+        let tableCount = 0;
+
+        // Loop through each sheet in the workbook
+        workbook.SheetNames.forEach(sheetName => {
+          const worksheet = workbook.Sheets[sheetName];
+          
+          // Convert the sheet into an array-of-arrays
+          // (header: 1 => the first row remains intact)
+          const sheetData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+          // If the sheet is empty, skip it
+          if (!sheetData.length) return;
+
+          // Build an HTML table by hand, treating the first row as headers
+          tableCount++;
+          let tableId = `generated-table-${tableCount}`; // unique ID
+
+          let tableHTML = `<table id="${tableId}">`;
+          
+          // Create the table header using the first row of data
+          tableHTML += '<thead><tr>';
+          sheetData[0].forEach(cell => {
+            tableHTML += `<th>${cell || ''}</th>`;
+          });
+          tableHTML += '</tr></thead>';
+
+          // Create the table body from the remaining rows
+          tableHTML += '<tbody>';
+          for (let i = 1; i < sheetData.length; i++) {
+            tableHTML += '<tr>';
+            sheetData[i].forEach(cell => {
+              tableHTML += `<td>${cell || ''}</td>`;
+            });
+            tableHTML += '</tr>';
+          }
+          tableHTML += '</tbody>';
+
+          tableHTML += '</table>';
+
+          // Append the sheet name and table to the container
+          container.innerHTML += `<h3>${sheetName}</h3>${tableHTML}`;
+        });
+
+        // 3. Initialize DataTables on all newly created tables
+        // Because we used unique IDs, you can target them individually OR all at once
+
+        // After tables are created, initialize DataTables
+        $(document).ready(() => {
+            // Target all tables, or specifically #generated-table-1, #generated-table-2, etc.
+            $('table').DataTable({
+              // Show 5 entries by default
+              pageLength: 5,
+  
+              // Allow the user to select from 5, 10, 25, 50, or 100
+              lengthMenu: [5, 10, 25, 50, 100]
+            });
+          });
+
+      } catch (error) {
+        console.error("Error loading Excel file:", error);
+        document.getElementById('excel-tables').innerHTML = 
+          "<p>Error loading data. Check the console for details.</p>";
+      }
+    })();
+  </script>
+
+</body>
+</html>
