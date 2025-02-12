@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Granolas Index Performance</title>
+  <!-- Include SheetJS (XLSX) -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- Include D3.js -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #chart-container {
+      width: 90%;
+      margin: auto;
+      background: #fff;
+      padding: 0px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .tooltip {
+      position: absolute;
+      background: white;
+      padding: 6px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 12px;
+      pointer-events: none;
+      display: none;
+    }
+    .legend {
+      font-size: 12px;
+    }
+    .date-filter {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .date-filter label {
+      margin-right: 5px;
+    }
+    .date-filter input {
+      margin-right: 10px;
+    }
+    .page-title {
+        text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Menu Container: Loads the menu from menu.html -->
+  <div id="menu-container"></div>
+  <script>
+    fetch('menu.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+      })
+      .catch(error => console.error('Error loading menu:', error));
+  </script>
+
+  <h1 class="page-title">Granolas Index Performance</h1>
+  
+  <!-- Date Filter Controls -->
+  <div class="date-filter">
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date">
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date">
+    <button id="filter-button">Apply Filter</button>
+  </div>
+  
+  <!-- Chart Container -->
+  <div id="chart-container">
+    <svg id="line-chart" width="800" height="500"></svg>
+  </div>
+  
+  <div class="tooltip" id="tooltip"></div>
+  
+  <script>
+    // Path to your Excel file (ensure it's accessible from the page)
+    const filePath = "granolas_index_performance.xlsx";
+    
+    // Global variables to hold all and filtered data
+    let allData = [];
+    let filteredData = [];
+    
+    // Get container width dynamically
+    const chartContainer = document.getElementById("chart-container");
+    const svgWidth = chartContainer.clientWidth; // Get the width of the container
+
+    const svgHeight = 500; // Fixed height
+    const margin = { top: 40, right: 30, bottom: 60, left: 60 };
+    const width = svgWidth - margin.left - margin.right;
+    const height = svgHeight - margin.top - margin.bottom;
+
+    // Update the SVG element to be responsive
+    const svg = d3.select("#line-chart")
+                .attr("width", "100%")
+                .attr("height", svgHeight);
+
+    // Apply transformation to maintain margins
+    const g = svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Update the xScale when resizing
+    window.addEventListener("resize", () => {
+        const newWidth = chartContainer.clientWidth - margin.left - margin.right;
+        xScale.range([0, newWidth]); // Adjust x-axis scale
+        svg.attr("width", "100%");
+        updateChart();
+    });
+    
+    // Define scales (domains will be set later)
+    let xScale = d3.scaleTime().range([0, width]);
+    let yScale = d3.scaleLinear().range([height, 0]);
+    
+    // Append groups for axes
+    const xAxisGroup = g.append("g")
+                        .attr("class", "x-axis")
+                        .attr("transform", `translate(0,${height})`);
+    
+    const yAxisGroup = g.append("g")
+                        .attr("class", "y-axis");
+    
+    // Color scale for different index types
+    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+    
+    // Tooltip div
+    const tooltip = d3.select("#tooltip");
+    
+    // Set up zoom behavior
+    const zoom = d3.zoom()
+                   .scaleExtent([1, 10])
+                   .translateExtent([[0, 0], [width, height]])
+                   .extent([[0, 0], [width, height]])
+                   .on("zoom", zoomed);
+    svg.call(zoom);
+    
+    // Load the Excel data automatically on page load
+    loadExcelData(filePath);
+    
+    async function loadExcelData(path) {
+      try {
+        const response = await fetch(path);
+        if (!response.ok) throw new Error("Failed to load Excel file.");
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(sheet);
+        
+        // Process the data: convert Excel serial dates to JavaScript Date if needed.
+        allData = jsonData.map(d => {
+          let dt = d.Date;
+          if (typeof dt === "number") {
+            // Convert Excel serial date to JS date:
+            dt = new Date((dt - 25569) * 86400 * 1000);
+          } else {
+            dt = new Date(dt);
+          }
+          return {
+            date: dt,
+            adjustedClose: +d["Adjusted Close"],
+            indexName: d["Index Name"]
+          };
+        }).sort((a, b) => a.date - b.date);
+        
+        // Initially, show all data
+        filteredData = allData;
+        
+        // Set default date filter values
+        const minDate = d3.min(allData, d => d.date),
+              maxDate = d3.max(allData, d => d.date);
+        document.getElementById("start-date").value = formatDateForInput(minDate);
+        document.getElementById("end-date").value = formatDateForInput(maxDate);
+        
+        updateChart();
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
+    }
+    
+    // Helper: Format Date for input type="date" (YYYY-MM-DD)
+    function formatDateForInput(date) {
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, "0");
+      const dd = String(date.getDate()).padStart(2, "0");
+      return `${yyyy}-${mm}-${dd}`;
+    }
+    
+    // Update the chart based on filteredData
+    function updateChart() {
+      // Group data by Index Name
+      const dataByIndex = d3.groups(filteredData, d => d.indexName);
+      
+      // Update scales
+      xScale.domain(d3.extent(filteredData, d => d.date));
+      yScale.domain([
+        d3.min(filteredData, d => d.adjustedClose) * 0.9,
+        d3.max(filteredData, d => d.adjustedClose) * 1.1
+      ]);
+      
+      // Update axes with formatted dates and rotate x-axis labels by 45°
+      const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%Y-%m-%d"));
+      const yAxis = d3.axisLeft(yScale);
+      
+      xAxisGroup.call(xAxis)
+                .selectAll("text")
+                .attr("transform", "rotate(45)")
+                .style("text-anchor", "start");
+      yAxisGroup.call(yAxis);
+      
+      // Remove existing lines, circles, and legends
+      g.selectAll(".line-path").remove();
+      g.selectAll(".data-point").remove();
+      g.selectAll(".legend").remove();
+      
+      // Define line generator
+      const lineGenerator = d3.line()
+                              .x(d => xScale(d.date))
+                              .y(d => yScale(d.adjustedClose));
+      
+      // Draw each line and its data points
+      dataByIndex.forEach(([indexName, values], i) => {
+        // Draw line
+        g.append("path")
+         .datum(values)
+         .attr("class", "line-path")
+         .attr("fill", "none")
+         .attr("stroke", colorScale(indexName))
+         .attr("stroke-width", 2)
+         .attr("d", lineGenerator);
+        
+        // Draw circles at data points with tooltips
+        g.selectAll(`.data-point-${i}`)
+         .data(values)
+         .enter()
+         .append("circle")
+         .attr("class", `data-point data-point-${i}`)
+         .attr("cx", d => xScale(d.date))
+         .attr("cy", d => yScale(d.adjustedClose))
+         .attr("r", 3)
+         .attr("fill", colorScale(indexName))
+         .on("mouseover", (event, d) => {
+           tooltip.style("display", "block")
+                  .html(`<strong>Date:</strong> ${d.date.toLocaleDateString()}<br>
+                         <strong>${d.indexName}:</strong> ${d.adjustedClose.toFixed(2)}`)
+                  .style("left", (event.pageX + 10) + "px")
+                  .style("top", (event.pageY - 28) + "px");
+         })
+         .on("mouseout", () => tooltip.style("display", "none"));
+      });
+      
+      // Draw legend for index types
+      const legend = g.selectAll(".legend")
+                      .data(dataByIndex)
+                      .enter()
+                      .append("g")
+                      .attr("class", "legend")
+                      .attr("transform", (d, i) => `translate(${width - 100}, ${i * 20})`);
+      
+      legend.append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 12)
+            .attr("height", 12)
+            .style("fill", d => colorScale(d[0]));
+      
+      legend.append("text")
+            .attr("x", 18)
+            .attr("y", 10)
+            .text(d => d[0]);
+    }
+    
+    // Zoom handler: update the x-axis and redraw lines/circles
+    function zoomed(event) {
+      const transform = event.transform;
+      const newXScale = transform.rescaleX(xScale);
+      
+      // Update x-axis with new scale and rotate labels
+      xAxisGroup.call(d3.axisBottom(newXScale).tickFormat(d3.timeFormat("%Y-%m-%d")))
+                .selectAll("text")
+                .attr("transform", "rotate(45)")
+                .style("text-anchor", "start");
+      
+      // Update lines and circles based on new x-scale
+      g.selectAll(".line-path")
+       .attr("d", d => d3.line()
+                            .x(d => newXScale(d.date))
+                            .y(d => yScale(d.adjustedClose))
+                            (d));
+      
+      g.selectAll(".data-point")
+       .attr("cx", d => newXScale(d.date));
+    }
+    
+    // Filter data based on date inputs when the filter button is clicked
+    document.getElementById("filter-button").addEventListener("click", () => {
+      const startDateValue = document.getElementById("start-date").value;
+      const endDateValue = document.getElementById("end-date").value;
+      if (startDateValue && endDateValue) {
+        const startDate = new Date(startDateValue);
+        const endDate = new Date(endDateValue);
+        filteredData = allData.filter(d => d.date >= startDate && d.date <= endDate);
+        updateChart();
+      }
+    });
+  </script>
+
+</body>
+</html>

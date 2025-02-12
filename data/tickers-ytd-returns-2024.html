@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,108 +8,23 @@
 
   <!-- 1. Include DataTables CSS (for sorting/filter UI) -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-  
+
   <!-- Include SheetJS (XLSX) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <!-- 2. Include jQuery and DataTables JS -->
   <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  
-  <style>
-    /* Example header styling */
-    header {
-        display: flex;
-        justify-content: space-between;  /* Right-align the logo text */
-        align-items: center;        /* Vertically center the logo text */
-        padding: 10px 20px;
-        background-color: #f2f2f2;  /* Optional background color for the header */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    	}
-        .logo-text {
-        font-size: 1.2rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        color: #333;
-        }
-	.tab-buttons {
- 	 display: flex;
- 	 gap: 10px; /* Spacing between buttons */
-	}
-	.tab-buttons button {
-  	padding: 8px 15px;
-  	font-size: 1rem;
-  	font-weight: bold;
-  	background-color: #007bff;
-  	color: white;
-  	border: none;
-  	border-radius: 5px;
-  	cursor: pointer;
-	}
-	.tab-buttons button:hover {
-  	background-color: #0056b3;
-	}
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      color: #333;
-    }
-    h1 {
-      font-size: 2rem;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-    h3 {
-      margin-top: 20px;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse; /* Keep for nice horizontal lines */
-      margin: 20px 0;
-    }
-    /* Remove vertical lines; keep horizontal lines */
-    th, td {
-      border-left: none;
-      border-right: none;
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background-color: black;
-      color: white;
-      text-transform: uppercase;
-      font-weight: bold;
-      border-top: 1px solid #ccc;
-      border-bottom: 1px solid #ccc; /* Horizontal line at bottom of header row */
-    }
-    td {
-      border-bottom: 1px solid #ccc; /* Horizontal line below each row */
-    }
-    tr:hover {
-      background-color: #e0e0e0;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Header with right-aligned text logo -->
-  <header>
-    <div class="tab-buttons">
-     <button onclick="window.location.href='https://www.cwcapital.co/data/tickers-ytd-returns.html';">Current Year</button>
-     <button onclick="window.location.href='https://www.cwcapital.co/data/tickers-ytd-returns-2024.html';">2024</button>
-    </div>
-    <div class="logo-text">CW Capital Data Vidualization</div>
-  </header>
-
-  <!-- Main Heading -->
-  <h1>Tickers YTD Returns</h1>
-
-  <div id="excel-tables">Loading data, please wait...</div>
-
   <script>
-    (async function() {
+    fetch('menu.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+      })
+      .catch(error => console.error('Error loading menu:', error));
+  </script>
+  <script>
+    (async function () {
       try {
         const response = await fetch('Tickers_YTD_Returns_2024.xlsx');
         if (!response.ok) {
@@ -128,7 +44,7 @@
         // Loop through each sheet in the workbook
         workbook.SheetNames.forEach(sheetName => {
           const worksheet = workbook.Sheets[sheetName];
-          
+
           // Convert the sheet into an array-of-arrays
           // (header: 1 => the first row remains intact)
           const sheetData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
@@ -141,7 +57,7 @@
           let tableId = `generated-table-${tableCount}`; // unique ID
 
           let tableHTML = `<table id="${tableId}">`;
-          
+
           // Create the table header using the first row of data
           tableHTML += '<thead><tr>';
           sheetData[0].forEach(cell => {
@@ -171,23 +87,125 @@
 
         // After tables are created, initialize DataTables
         $(document).ready(() => {
-            // Target all tables, or specifically #generated-table-1, #generated-table-2, etc.
-            $('table').DataTable({
-              // Show 20 entries by default
-              pageLength: 20,
-  
-              // Allow the user to select from 5, 10, 25, 50, or 100
-              lengthMenu: [5, 10, 25, 50, 100]
-            });
+          // Target all tables, or specifically #generated-table-1, #generated-table-2, etc.
+          $('table').DataTable({
+            // Show 20 entries by default
+            pageLength: 20,
+
+            // Allow the user to select from 5, 10, 25, 50, or 100
+            lengthMenu: [5, 10, 25, 50, 100]
           });
+        });
 
       } catch (error) {
         console.error("Error loading Excel file:", error);
-        document.getElementById('excel-tables').innerHTML = 
+        document.getElementById('excel-tables').innerHTML =
           "<p>Error loading data. Check the console for details.</p>";
       }
     })();
   </script>
 
+  <style>
+    /* Example header styling */
+    .page-container{
+      padding: 50px;
+    }
+    .page-title {
+      text-align: center;
+  }
+    header {
+      display: flex;
+      justify-content: space-between;
+      /* Right-align the logo text */
+      align-items: center;
+      /* Vertically center the logo text */
+      padding: 10px 20px;
+      background-color: #f2f2f2;
+      /* Optional background color for the header */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #333;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      color: #333;
+    }
+
+    .dataTables_length {
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      margin-top: 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      /* Keep for nice horizontal lines */
+      margin: 20px 0;
+    }
+
+    /* Remove vertical lines; keep horizontal lines */
+    th,
+    td {
+      border-left: none;
+      border-right: none;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: black;
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      /* Horizontal line at bottom of header row */
+    }
+
+    td {
+      border-bottom: 1px solid #ccc;
+      /* Horizontal line below each row */
+    }
+
+    tr:hover {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Menu Container: Loads the menu from menu.html -->
+  <div id="menu-container"></div>
+
+<div id="" class="page-container">
+
+  <!-- Main Heading -->
+  <h1 class="page-title">2024 YTD Returns</h1>
+  
+  <div id="excel-tables">Loading data, please wait...</div>
+</div>
+
+
+
 </body>
+
 </html>
