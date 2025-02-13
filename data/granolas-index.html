@@ -4,57 +4,76 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Granolas Index Performance</title>
+
   <!-- Include SheetJS (XLSX) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <!-- Include D3.js -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script>
-    fetch('menu.html')
-      .then(response => response.text())
-      .then(html => {
-        document.getElementById('menu-container').innerHTML = html;
-        
-        // Reattach dropdown toggle events
-        document.querySelectorAll('.dropdown-toggle').forEach(item => {
-            item.addEventListener('click', function(event) {
-                event.preventDefault();
-                const dropdownMenu = this.nextElementSibling;
-                
-                // Close all other dropdowns
-                document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                    if (menu !== dropdownMenu) menu.classList.remove('show');
-                });
 
-                // Toggle this dropdown
-                dropdownMenu.classList.toggle('show');
-            });
-        });
-
-        // Close dropdowns when clicking outside
-        window.addEventListener('click', function(e) {
-            if (!e.target.closest('.dropdown')) {
-                document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
-            }
-        });
-      })
-      .catch(error => console.error('Error loading menu:', error));
-  </script>
   <style>
-    .page-container{
-      padding: 50px;
-    }
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
+      background: #fafafa;
     }
-    #chart-container {
-      width: 90%;
-      margin: auto;
+    /* Container for the menu */
+    #menu-container {
+      margin-bottom: 20px;
+    }
+    /* Page container */
+    .page-container {
+      padding: 30px;
+    }
+    .page-title {
+      text-align: center;
+      margin-bottom: 30px;
+      scroll-margin-top: 30px;
+    }
+    
+    /* Date filter area */
+    .date-filter {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .date-filter label {
+      margin-right: 5px;
+      font-weight: bold;
+    }
+    .date-filter input {
+      margin-right: 10px;
+    }
+    #filter-button {
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    /* Single chart section */
+    .chart-section {
       background: #fff;
-      padding: 0px;
+      margin-bottom: 30px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
     }
+    .chart-section-title {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .chart-container {
+      width: 100%;
+      position: relative;
+    }
+    svg {
+      width: 100%;
+      height: 500px;
+    }
+
+    /* Tooltip */
     .tooltip {
       position: absolute;
       background: white;
@@ -68,128 +87,98 @@
     .legend {
       font-size: 12px;
     }
-    .date-filter {
-      margin-bottom: 15px;
-      text-align: center;
-    }
-    .date-filter label {
-      margin-right: 5px;
-    }
-    .date-filter input {
-      margin-right: 10px;
-    }
-    .page-title {
-        text-align: center;
-        margin-bottom: 30px;
-        scroll-margin-top: 30px;
-    }
   </style>
 </head>
-
 <body>
-  <!-- Menu Container: Loads the menu from menu.html -->
+  <!-- Menu Container (load from external menu.html) -->
   <div id="menu-container"></div>
 
-  <div id="" class="page-container">
+  <div class="page-container">
+    <h1 class="page-title">Granolas Index Performance</h1>
 
-  <h1 class="page-title">Granolas Index Performance</h1>
-  
-  <!-- Date Filter Controls -->
-  <div class="date-filter">
-    <label for="start-date">Start Date:</label>
-    <input type="date" id="start-date">
-    <label for="end-date">End Date:</label>
-    <input type="date" id="end-date">
-    <button id="filter-button">Apply Filter</button>
+    <!-- Global Date Filter -->
+    <div class="date-filter">
+      <label for="start-date">Start Date:</label>
+      <input type="date" id="start-date">
+      <label for="end-date">End Date:</label>
+      <input type="date" id="end-date">
+      <button id="filter-button">Apply Filter</button>
+    </div>
+
+    <!-- Only one chart section now -->
+    <div class="chart-section">
+      <h2 class="chart-section-title">Overall Performance</h2>
+      <div class="chart-container" id="chart1-container"></div>
+    </div>
+
+    <!-- Tooltip (shared by chart) -->
+    <div class="tooltip" id="tooltip"></div>
   </div>
-  
-  <!-- Chart Container -->
-  <div id="chart-container">
-    <svg id="line-chart" width="800" height="500"></svg>
-  </div>
-  
-  <div class="tooltip" id="tooltip"></div>
-  
+
   <script>
-    // Path to your Excel file (ensure it's accessible from the page)
+    /*************************************************
+     * 1) MENU LOAD: Fetch external menu.html
+     *************************************************/
+    fetch('menu.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+
+        // Reattach dropdown toggle events if you have them
+        document.querySelectorAll('.dropdown-toggle').forEach(item => {
+            item.addEventListener('click', function(event) {
+                event.preventDefault();
+                const dropdownMenu = this.nextElementSibling;
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                  if (menu !== dropdownMenu) menu.classList.remove('show');
+                });
+                dropdownMenu.classList.toggle('show');
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        window.addEventListener('click', function(e) {
+          if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
+          }
+        });
+      })
+      .catch(error => console.error('Error loading menu:', error));
+
+
+    /*************************************************
+     * 2) DATA LOADING
+     *************************************************/
     const filePath = "granolas_index_performance.xlsx";
-    
-    // Global variables to hold all and filtered data
-    let allData = [];
-    let filteredData = [];
-    
-    // Get container width dynamically
-    const chartContainer = document.getElementById("chart-container");
-    const svgWidth = chartContainer.clientWidth; // Get the width of the container
+    let allData = [];   // Will hold the complete dataset
+    let filteredData = []; // Will hold the filtered dataset (based on date range)
 
-    const svgHeight = 500; // Fixed height
-    const margin = { top: 40, right: 30, bottom: 60, left: 60 };
-    const width = svgWidth - margin.left - margin.right;
-    const height = svgHeight - margin.top - margin.bottom;
-
-    // Update the SVG element to be responsive
-    const svg = d3.select("#line-chart")
-                .attr("width", "100%")
-                .attr("height", svgHeight);
-
-    // Apply transformation to maintain margins
-    const g = svg.append("g")
-                .attr("transform", `translate(${margin.left},${margin.top})`);
-
-    // Update the xScale when resizing
-    window.addEventListener("resize", () => {
-        const newWidth = chartContainer.clientWidth - margin.left - margin.right;
-        xScale.range([0, newWidth]); // Adjust x-axis scale
-        svg.attr("width", "100%");
-        updateChart();
-    });
-    
-    // Define scales (domains will be set later)
-    let xScale = d3.scaleTime().range([0, width]);
-    let yScale = d3.scaleLinear().range([height, 0]);
-    
-    // Append groups for axes
-    const xAxisGroup = g.append("g")
-                        .attr("class", "x-axis")
-                        .attr("transform", `translate(0,${height})`);
-    
-    const yAxisGroup = g.append("g")
-                        .attr("class", "y-axis");
-    
-    // Color scale for different index types
-    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-    
-    // Tooltip div
-    const tooltip = d3.select("#tooltip");
-    
-    // Set up zoom behavior
-    const zoom = d3.zoom()
-                   .scaleExtent([1, 10])
-                   .translateExtent([[0, 0], [width, height]])
-                   .extent([[0, 0], [width, height]])
-                   .on("zoom", zoomed);
-    svg.call(zoom);
-    
-    // Load the Excel data automatically on page load
+    // Load the Excel data once on page load
     loadExcelData(filePath);
-    
+
     async function loadExcelData(path) {
       try {
         const response = await fetch(path);
         if (!response.ok) throw new Error("Failed to load Excel file.");
         const arrayBuffer = await response.arrayBuffer();
-        const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+        
+        // Read with SheetJS, letting it parse date cells automatically
+        const workbook = XLSX.read(new Uint8Array(arrayBuffer), {
+          type: 'array',
+          cellDates: true,
+          dateNF: "yyyy-mm-dd"
+        });
+        
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
-        const jsonData = XLSX.utils.sheet_to_json(sheet);
         
-        // Process the data: convert Excel serial dates to JavaScript Date if needed.
+        // Convert to JSON (raw: false -> string dates from the dateNF format)
+        const jsonData = XLSX.utils.sheet_to_json(sheet, { raw: false });
+        
+        // Convert string dates to JavaScript Date objects
         allData = jsonData.map(d => {
           let dt = d.Date;
-          if (typeof dt === "number") {
-            // Convert Excel serial date to JS date:
-            dt = new Date((dt - 25569) * 86400 * 1000);
-          } else {
+          if (typeof dt === 'string') {
             dt = new Date(dt);
           }
           return {
@@ -198,148 +187,248 @@
             indexName: d["Index Name"]
           };
         }).sort((a, b) => a.date - b.date);
-        
-        // Initially, show all data
-        filteredData = allData;
-        
-        // Set default date filter values
-        const minDate = d3.min(allData, d => d.date),
-              maxDate = d3.max(allData, d => d.date);
+
+        // Initialize filteredData = allData
+        // But set our default end date to *today*
+        const minDate = d3.min(allData, d => d.date);
+        const today = new Date();
+
+        // Set default values in the date inputs
         document.getElementById("start-date").value = formatDateForInput(minDate);
-        document.getElementById("end-date").value = formatDateForInput(maxDate);
-        
-        updateChart();
+        document.getElementById("end-date").value = formatDateForInput(today);
+
+        // Now apply that default filter right away
+        applyDefaultFilter(minDate, today);
       } catch (error) {
         console.error("Error loading data:", error);
       }
     }
-    
-    // Helper: Format Date for input type="date" (YYYY-MM-DD)
+
+    // Helper to format a date as yyyy-mm-dd
     function formatDateForInput(date) {
       const yyyy = date.getFullYear();
-      const mm = String(date.getMonth() + 1).padStart(2, "0");
-      const dd = String(date.getDate()).padStart(2, "0");
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const dd = String(date.getDate()).padStart(2, '0');
       return `${yyyy}-${mm}-${dd}`;
     }
-    
-    // Update the chart based on filteredData
-    function updateChart() {
-      // Group data by Index Name
-      const dataByIndex = d3.groups(filteredData, d => d.indexName);
-      
-      // Update scales
-      xScale.domain(d3.extent(filteredData, d => d.date));
-      yScale.domain([
-        d3.min(filteredData, d => d.adjustedClose) * 0.9,
-        d3.max(filteredData, d => d.adjustedClose) * 1.1
-      ]);
-      
-      // Update axes with formatted dates and rotate x-axis labels by 45°
-      const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%Y-%m-%d"));
-      const yAxis = d3.axisLeft(yScale);
-      
-      xAxisGroup.call(xAxis)
-                .selectAll("text")
-                .attr("transform", "rotate(45)")
-                .style("text-anchor", "start");
-      yAxisGroup.call(yAxis);
-      
-      // Remove existing lines, circles, and legends
-      g.selectAll(".line-path").remove();
-      g.selectAll(".data-point").remove();
-      g.selectAll(".legend").remove();
-      
-      // Define line generator
-      const lineGenerator = d3.line()
-                              .x(d => xScale(d.date))
-                              .y(d => yScale(d.adjustedClose));
-      
-      // Draw each line and its data points
-      dataByIndex.forEach(([indexName, values], i) => {
-        // Draw line
-        g.append("path")
-         .datum(values)
-         .attr("class", "line-path")
-         .attr("fill", "none")
-         .attr("stroke", colorScale(indexName))
-         .attr("stroke-width", 2)
-         .attr("d", lineGenerator);
-        
-        // Draw circles at data points with tooltips
-        g.selectAll(`.data-point-${i}`)
-         .data(values)
-         .enter()
-         .append("circle")
-         .attr("class", `data-point data-point-${i}`)
-         .attr("cx", d => xScale(d.date))
-         .attr("cy", d => yScale(d.adjustedClose))
-         .attr("r", 3)
-         .attr("fill", colorScale(indexName))
-         .on("mouseover", (event, d) => {
-           tooltip.style("display", "block")
-                  .html(`<strong>Date:</strong> ${d.date.toLocaleDateString()}<br>
-                         <strong>${d.indexName}:</strong> ${d.adjustedClose.toFixed(2)}`)
-                  .style("left", (event.pageX + 10) + "px")
-                  .style("top", (event.pageY - 28) + "px");
-         })
-         .on("mouseout", () => tooltip.style("display", "none"));
-      });
-      
-      // Draw legend for index types
-      const legend = g.selectAll(".legend")
-                      .data(dataByIndex)
-                      .enter()
-                      .append("g")
-                      .attr("class", "legend")
-                      .attr("transform", (d, i) => `translate(${width - 100}, ${i * 20})`);
-      
-      legend.append("rect")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", 12)
-            .attr("height", 12)
-            .style("fill", d => colorScale(d[0]));
-      
-      legend.append("text")
-            .attr("x", 18)
-            .attr("y", 10)
-            .text(d => d[0]);
-    }
-    
-    // Zoom handler: update the x-axis and redraw lines/circles
-    function zoomed(event) {
-      const transform = event.transform;
-      const newXScale = transform.rescaleX(xScale);
-      
-      // Update x-axis with new scale and rotate labels
-      xAxisGroup.call(d3.axisBottom(newXScale).tickFormat(d3.timeFormat("%Y-%m-%d")))
-                .selectAll("text")
-                .attr("transform", "rotate(45)")
-                .style("text-anchor", "start");
-      
-      // Update lines and circles based on new x-scale
-      g.selectAll(".line-path")
-       .attr("d", d => d3.line()
-                            .x(d => newXScale(d.date))
-                            .y(d => yScale(d.adjustedClose))
-                            (d));
-      
-      g.selectAll(".data-point")
-       .attr("cx", d => newXScale(d.date));
-    }
-    
-    // Filter data based on date inputs when the filter button is clicked
+
+
+    /*************************************************
+     * 3) GLOBAL DATE FILTER
+     *************************************************/
     document.getElementById("filter-button").addEventListener("click", () => {
       const startDateValue = document.getElementById("start-date").value;
       const endDateValue = document.getElementById("end-date").value;
       if (startDateValue && endDateValue) {
         const startDate = new Date(startDateValue);
+        // Start of the selected start day
+        startDate.setHours(0, 0, 0, 0);
+
         const endDate = new Date(endDateValue);
+        // End of the selected end day (23:59:59)
+        endDate.setHours(23, 59, 59, 999);
+
         filteredData = allData.filter(d => d.date >= startDate && d.date <= endDate);
-        updateChart();
+        updateChart(); // Re-render chart with the new filtered data
       }
     });
+
+    // Apply the default filter on page load (start date is minDate, end date is "today")
+    function applyDefaultFilter(minDate, endDate) {
+      // Round minDate to 0:00:00
+      minDate.setHours(0, 0, 0, 0);
+      // Round endDate to 23:59:59
+      endDate.setHours(23, 59, 59, 999);
+
+      filteredData = allData.filter(d => d.date >= minDate && d.date <= endDate);
+      updateChart();
+    }
+
+    /*************************************************
+     * 4) CHART RENDERING LOGIC
+     *************************************************/
+
+    // This function will render (or re-render) our single chart
+    function updateChart() {
+      // We only have one chart, so let's just recreate it in chart1-container
+      createLineChart(
+        "#chart1-container",
+        filteredData,
+        { 
+          title: "Overall Performance",
+          colorScheme: d3.schemeCategory10 
+        }
+      );
+    }
+
+    /**
+     * Create a line chart in the specified container using D3.
+     * @param {string} containerSelector - DOM selector for chart container (e.g. "#chart1-container")
+     * @param {Array} data - The data array to visualize.
+     * @param {Object} options - Chart config (color scheme, etc.).
+     */
+    function createLineChart(containerSelector, data, options={}) {
+      // Clear anything existing in the container (so we can re-render cleanly)
+      const container = document.querySelector(containerSelector);
+      container.innerHTML = "";  // remove old chart
+
+      // Create an SVG element
+      const svgWidth = container.clientWidth;
+      const svgHeight = 500;
+      const margin = { top: 40, right: 30, bottom: 60, left: 60 };
+      const width = svgWidth - margin.left - margin.right;
+      const height = svgHeight - margin.top - margin.bottom;
+
+      const svg = d3.select(container)
+        .append("svg")
+        .attr("width", "100%")
+        .attr("height", svgHeight);
+
+      // Group for chart content
+      const g = svg.append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+      // If no data, you could handle an empty state (optional)
+      if (!data || data.length === 0) {
+        g.append("text")
+          .attr("x", width / 2)
+          .attr("y", height / 2)
+          .attr("text-anchor", "middle")
+          .style("fill", "#999")
+          .text("No data available for this date range");
+        return;
+      }
+
+      // Scales
+      const xScale = d3.scaleTime()
+        .range([0, width])
+        .domain(d3.extent(data, d => d.date));
+
+      const yScale = d3.scaleLinear()
+        .range([height, 0])
+        .domain([
+          d3.min(data, d => d.adjustedClose) * 0.9,
+          d3.max(data, d => d.adjustedClose) * 1.1
+        ]);
+
+      // Axes
+      const xAxis = d3.axisBottom(xScale)
+        .tickFormat(d3.timeFormat("%Y-%m-%d"));
+      const yAxis = d3.axisLeft(yScale);
+
+      // Append axes
+      const xAxisGroup = g.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", `translate(0,${height})`)
+        .call(xAxis);
+
+      xAxisGroup.selectAll("text")
+        .attr("transform", "rotate(45)")
+        .style("text-anchor", "start");
+
+      g.append("g")
+        .call(yAxis);
+
+      // Color scale for different index names
+      const colorScale = d3.scaleOrdinal(options.colorScheme || d3.schemeCategory10);
+      // Group data by Index Name
+      const dataByIndex = d3.groups(data, d => d.indexName);
+
+      // Define line generator
+      const lineGenerator = d3.line()
+        .x(d => xScale(d.date))
+        .y(d => yScale(d.adjustedClose));
+
+      // Draw lines + data points for each index
+      dataByIndex.forEach(([indexName, values], i) => {
+        g.append("path")
+          .datum(values)
+          .attr("fill", "none")
+          .attr("stroke", colorScale(indexName))
+          .attr("stroke-width", 2)
+          .attr("d", lineGenerator);
+
+        g.selectAll(`.data-point-${i}`)
+          .data(values)
+          .enter()
+          .append("circle")
+          .attr("class", `data-point data-point-${i}`)
+          .attr("cx", d => xScale(d.date))
+          .attr("cy", d => yScale(d.adjustedClose))
+          .attr("r", 3)
+          .attr("fill", colorScale(indexName))
+          .on("mouseover", (event, d) => {
+            const tooltip = d3.select("#tooltip");
+            tooltip.style("display", "block")
+              .html(`
+                <strong>Date:</strong> ${d.date.toLocaleDateString()}<br>
+                <strong>${d.indexName}:</strong> ${d.adjustedClose.toFixed(2)}
+              `)
+              .style("left", (event.pageX + 10) + "px")
+              .style("top", (event.pageY - 28) + "px");
+          })
+          .on("mouseout", () => {
+            d3.select("#tooltip").style("display", "none");
+          });
+      });
+
+      // Draw legend
+      const legend = g.selectAll(".legend")
+        .data(dataByIndex)
+        .enter()
+        .append("g")
+        .attr("class", "legend")
+        .attr("transform", (d, i) => `translate(${width - 100}, ${i * 20})`);
+
+      legend.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 12)
+        .attr("height", 12)
+        .style("fill", d => colorScale(d[0]));
+
+      legend.append("text")
+        .attr("x", 18)
+        .attr("y", 10)
+        .text(d => d[0]);
+
+      // Optional: Zoom behavior (for this single chart)
+      const zoom = d3.zoom()
+        .scaleExtent([1, 10])
+        .translateExtent([[0, 0], [width, height]])
+        .extent([[0, 0], [width, height]])
+        .on("zoom", (event) => {
+          const newXScale = event.transform.rescaleX(xScale);
+
+          // Update x-axis
+          g.select(".x-axis")
+            .call(d3.axisBottom(newXScale).tickFormat(d3.timeFormat("%Y-%m-%d")))
+            .selectAll("text")
+            .attr("transform", "rotate(45)")
+            .style("text-anchor", "start");
+
+          // Update lines and circles
+          g.selectAll("path")
+            .attr("d", function(d) {
+              // d is the bound data array for each path
+              return lineGenerator(
+                d.map(pt => ({
+                  date: pt.date,
+                  adjustedClose: pt.adjustedClose
+                }))
+                .map(pt => ({ 
+                  ...pt, 
+                  x: newXScale(pt.date) 
+                }))
+              );
+            });
+
+          g.selectAll("circle")
+            .attr("cx", d => newXScale(d.date));
+        });
+
+      svg.call(zoom);
+    }
   </script>
-</div>
 </body>
 </html>
