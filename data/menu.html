@@ -1,157 +1,235 @@
 <!-- menu.html -->
 <nav class="navbar">
-    <div class="navbar-container">
-      <div class="navbar-left">
-        <ul class="nav-menu">
-          <li><a href="index.html">Home</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle">YTD Performance<span class="arrow">&#9662;</span></a>
-            <ul class="dropdown-menu">
-              <li><a href="https://www.cwcapital.co/data/tickers-ytd-returns.html">Current Year YTD</a></li>
-              <li><a href="https://www.cwcapital.co/data/tickers-ytd-returns-2024.html">2024 YTD</li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle">Index Performance <span class="arrow">&#9662;</span></a>
-            <ul class="dropdown-menu">
-              <li><a href="granolas-index.html">Granolas Index</a></li>
-            </ul>
-          </li>
-        </ul>
+  <div class="navbar-container">
+      <!-- Hamburger Menu Icon for Mobile -->
+      <input type="checkbox" id="menu-toggle" class="menu-toggle">
+      <label for="menu-toggle" class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+      </label>
+
+      <!-- Left Side Menu -->
+      <div class="nav-menu-container">
+          <ul class="nav-menu">
+              <li><a href="index.html">Home</a></li>
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event, 'ytd-dropdown')">
+                      YTD Performance<span class="arrow">&#9662;</span>
+                  </a>
+                  <ul class="dropdown-menu" id="ytd-dropdown">
+                      <li><a href="https://www.cwcapital.co/data/tickers-ytd-returns.html">Current Year YTD</a></li>
+                      <li><a href="https://www.cwcapital.co/data/tickers-ytd-returns-2024.html">2024 YTD</a></li>
+                  </ul>
+              </li>
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event, 'index-dropdown')">
+                      Index Performance <span class="arrow">&#9662;</span>
+                  </a>
+                  <ul class="dropdown-menu" id="index-dropdown">
+                      <li><a href="granolas-index.html">Granolas Index</a></li>
+                  </ul>
+              </li>
+          </ul>
       </div>
+
+      <!-- Right Side Branding -->
       <div class="navbar-right">
-        <span class="brand">CW Capital</span>
+          <span class="brand">CW Capital</span>
       </div>
-    </div>
-  </nav>
-  
-  <style>
-    /* Reset some defaults */
-    * {
+  </div>
+</nav>
+
+<style>
+  /* Reset Defaults */
+  * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
-    /* Fix navbar position */
-    .navbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background-color: #ffffff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        padding: 10px 20px;
-    }
-    
-    /* Ensure page content starts below the navbar */
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        padding-top: 70px; /* Adjust this value if necessary */
-    }
-    
-    /* Adjust spacing between menu and H1 */
-    h1 {
-        margin-top: 20px;
-        padding: 20px;
-    }
-    .navbar-container {
-      padding: 0 20px;
+  }
+
+  /* Navbar Styling */
+  .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      padding: 10px 20px;
+  }
+
+  .navbar-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 60px;
-    }
-    /* Left side menu */
-    .nav-menu {
+      margin: 0 auto;
+  }
+
+  /* Left Menu */
+  .nav-menu {
       list-style: none;
       display: flex;
       gap: 20px;
-    }
-    .nav-menu li {
+  }
+
+  .nav-menu li {
       position: relative;
-    }
-    .nav-menu a {
+  }
+
+  .nav-menu a {
       text-decoration: none;
       font-size: 16px;
       color: #333;
       padding: 15px 10px;
       transition: color 0.3s ease, background-color 0.3s ease;
-    }
-    .nav-menu a:hover {
+  }
+
+  .nav-menu a:hover {
       color: #007BFF;
       background-color: rgba(0, 123, 255, 0.1);
       border-radius: 4px;
-    }
-    .dropdown {
-        position: relative;
-        display: inline-block;
-      }
-      
-      .dropdown .dropdown-menu {
-        display: none;
-        position: absolute;
-        top: 100%; /* Ensures dropdown appears right below */
-        left: 50%; /* Start from the middle of the parent */
-        transform: translateX(-50%); /* Shift left by 50% of its own width */
-        background-color: #ffffff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        list-style: none;
-        min-width: 150px;
-        border-radius: 4px;
-        overflow: hidden;
-        text-align: center;
-        padding: 5px 0;
-        z-index: 10;
-      }
-      
-      /* Ensure dropdown appears on hover */
+  }
+
+  /* Dropdown Menu */
+  .dropdown .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      list-style: none;
+      min-width: 180px;
+      border-radius: 4px;
+      overflow: hidden;
+      text-align: center;
+      padding: 5px 0;
+      z-index: 10;
+  }
+
+  /* Ensure dropdown appears on hover (Desktop Only) */
+  @media (min-width: 769px) {
       .dropdown:hover .dropdown-menu {
-        display: block;
+          display: block;
       }
-    .dropdown-menu li a {
+  }
+
+  .dropdown-menu li a {
       display: block;
       padding: 10px 15px;
       color: #333;
       white-space: nowrap;
-    }
-    .dropdown-menu li a:hover {
+  }
+
+  .dropdown-menu li a:hover {
       background-color: #f1f1f1;
-    }
-    .dropdown-toggle .arrow {
-      font-size: 12px;
-      margin-left: 4px;
-    }
-    /* Right side branding */
-    .navbar-right .brand {
+  }
+
+  /* Right Branding */
+  .navbar-right .brand {
       font-size: 20px;
       font-weight: bold;
       color: #007BFF;
-    }
-    
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
+  }
+
+  /* Hamburger Menu Styling */
+  .menu-toggle {
+      display: none;
+  }
+
+  .menu-icon {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+  }
+
+  .menu-icon span {
+      height: 3px;
+      width: 25px;
+      background-color: #333;
+      margin: 4px 0;
+      transition: 0.4s;
+  }
+
+  /* Responsive Styles for Mobile */
+  @media (max-width: 768px) {
       .navbar-container {
-        flex-direction: column;
-        height: auto;
-        padding: 10px;
+          flex-direction: row;
+          align-items: center;
       }
+
+      /* Hide Nav Menu by Default */
+      .nav-menu-container {
+          display: none;
+          width: 100%;
+      }
+
+      .menu-icon {
+          display: flex;
+      }
+
+      /* Show Menu when Active */
+      .menu-toggle:checked + .menu-icon + .nav-menu-container {
+          display: block;
+      }
+
       .nav-menu {
-        flex-direction: column;
-        gap: 0;
-        width: 100%;
+          flex-direction: column;
+          gap: 0;
       }
+
       .nav-menu li {
-        width: 100%;
+          text-align: center;
+          width: 100%;
       }
+
       .nav-menu a {
-        display: block;
-        width: 100%;
-        padding: 10px;
+          display: block;
+          width: 100%;
+          padding: 12px;
       }
-      .navbar-right {
-        margin-top: 10px;
+
+      /* Fix Dropdowns in Mobile */
+      .dropdown .dropdown-menu {
+          display: none;
+          position: relative;
+          width: 100%;
+          left: 0;
+          transform: none;
       }
-    }
-  </style>
+
+      .dropdown-menu.show {
+          display: block; /* Make dropdowns visible when toggled */
+      }
+
+      .dropdown-menu li {
+          text-align: center;
+      }
+  }
+</style>
+
+<!-- JavaScript for Mobile Menu & Clickable Dropdowns -->
+<script>
+  function toggleDropdown(event, dropdownId) {
+      event.preventDefault();
+      const dropdownMenu = document.getElementById(dropdownId);
+      
+      // Close other dropdowns before opening the selected one
+      document.querySelectorAll('.dropdown-menu').forEach(menu => {
+          if (menu !== dropdownMenu) menu.classList.remove('show');
+      });
+
+      // Toggle dropdown visibility
+      dropdownMenu.classList.toggle('show');
+  }
+
+  // Close dropdowns when clicking outside
+  window.addEventListener('click', function(e) {
+      if (!e.target.closest('.dropdown') && !e.target.closest('.dropdown-toggle')) {
+          document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
+      }
+  });
+</script>
