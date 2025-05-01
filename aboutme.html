@@ -13,8 +13,39 @@
 		<link rel="manifest" href="images/logo/site.webmanifest">
 		<meta name="google-site-verification" content="1fB0-xGkYGZvjv0D4y8-KzQrhA1DmY_XRuliZbTQmYs" />
 		<meta name="description" content="Explore Shudi Zhao's professional journey as a Data Scientist, View detailed project portfolios, work experience, and key achievements." />
-
-
+		<script src="https://cdn.tailwindcss.com"></script>
+		<style>
+			.tech-logo {
+				width: 60px;
+				height: 60px;
+				object-fit: contain;
+				margin-right: 1.5rem;
+			}
+			.tech-item {
+				display: flex;
+				align-items: center;
+				margin-bottom: 1rem;
+				font-size: 1.1rem;
+				color: #2d3748;
+			}
+			.section-container {
+				background: linear-gradient(145deg, #ffffff, #f7fafc);
+				border-radius: 1rem;
+				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+				transition: transform 0.3s ease;
+			}
+			.section-container:hover {
+				transform: translateY(-5px);
+			}
+			.section-title {
+				background: linear-gradient(to right, #4a5568, #2d3748);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+			.cloud-storage-grid {
+				grid-template-columns: 1fr; /* Single column for Cloud Storage & Infrastructure */
+			}
+		</style>
 	</head>
 	<body class="is-preload">
 
@@ -34,9 +65,9 @@
 					<li><a href="blogs.html">Blogs</a></li>
 				</ul>
 				<ul class="icons">
-                    <li><a href="https://www.linkedin.com/in/shudi-zhao/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
-                    <li><a href="https://github.com/Shudi-Zhao" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                </ul>
+					<li><a href="https://www.linkedin.com/in/shudi-zhao/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+					<li><a href="https://github.com/Shudi-Zhao" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+				</ul>
 			</nav>
 
 			<!-- Main -->
@@ -45,153 +76,106 @@
 				<!-- About Section -->
 				<section class="post">
 					<header class="major">
-						<h1>My Professional Experiences</h1>
+						<h1 class="text-4xl font-bold text-center mb-8 section-title">My Tech Stack</h1>
 					</header>
-					<!-- Summary Section -->
-					<h2>Summary</h2>
-					<p>Data Scientist with expertise in machine learning, data analysis, and building predictive models using Python, Scikit-learn, and PyTorch. Skilled in developing ETL pipelines, working with cloud platforms (AWS, GCP), and automating workflows. Proven ability to collaborate with teams to drive data-driven insights, improve conversion rates, and enhance user engagement.</p>
 
-
-					<h2>Skills</h2>
-					<ul>
-						<li><strong>Programming Languages:</strong> Python, R, SQL, HTML, CSS, Swift UI</li>
-						<li><strong>Python Libraries:</strong> NumPy, Pandas, Polars, Scikit-learn, PyTorch, TensorFlow, PySpark, Matplotlib, Seaborn, NLTK</li>
-						<li><strong>Data Analysis & Visualization Tools:</strong> Excel, Tableau, Mixpanel, Superset</li>
-						<li><strong>Databases:</strong> MongoDB, MySQL, Redis, Google BigQuery, Hive, Milvus</li>
-						<li><strong>Cloud & DevOps:</strong> GitLab, Linux, Amazon EC2, Amazon RDS, Google Cloud Storage (GCP), Docker</li>
-						<li><strong>Industry Skills:</strong> Data Analysis, ETL Pipelines, Product Sense, Team Collaboration, Project Management</li>
-					</ul>
-
-					<h2>Professional Experience</h2>
-
-					<!-- Job: Data Scientist -->
-					<h3>Data Scientist</h3>
-					<p><strong>Company:</strong> The Epoch Times, New York, NY<br />
-					<strong>Dates:</strong> Jun. 2022 - Present</p>
-					<ul>
-						<li>Developed predictive models to enhance user engagement and subscription rates.</li>
-						<li>Implemented personalized content recommendation systems for email newsletter users.</li>
-						<li>Collaborated with cross-functional teams to improve data tracking and analytics processes.</li>
-						<li>Analyzed user data to optimize app engagement strategies.</li>
-						<li>Presented key insights to senior management to inform strategic decisions.</li>
-					</ul>
-					
-					<!-- Job: Data Science Intern -->
-					<h3>Data Science Intern</h3>
-					<p><strong>Company:</strong> Deledao, Santa Clara, CA<br />
-					<strong>Dates:</strong> Sep. 2021 - May 2022</p>
-					<ul>
-						<li>Developed machine learning models to classify and categorize web content.</li>
-						<li>Enhanced content analysis processes to support educational initiatives.</li>
-					</ul>
-					
-					<!-- Job: Investment Analyst (Part-Time) -->
-					<h3>Investment Analyst (Part-Time)</h3>
-					<p><strong>Company:</strong> Brunswick Advisers, New York, NY<br />
-					<strong>Dates:</strong> May. 2021 - Present</p>
-					<ul>
-						<li>Automated trading processes and portfolio management tasks using programming tools.</li>
-						<li>Developed pipelines for testing and analyzing trading strategies.</li>
-						<li>Conducted data analysis to identify investment opportunities.</li>
-						<li>Prepared data-driven presentations to inform investment decisions.</li>
-					</ul>
-					<hr />
-
-
-					<section id="projects">
-						<header class="major">
-							<h2>Projects</h2>
-						</header>
-						<!-- Machine Learning Projects Section -->
-						<h3>Machine Learning Projects</h3>
-						<ul>
-							<li>
-								<h4><a href="https://shudi-zhao.github.io/ShudiTheDataScientist.github.io/" target="_blank">Used Car Price Prediction</a></h4>
-								<p><strong>Description:</strong> Developed a machine learning model to predict used car prices using extensive feature engineering and hyperparameter tuning. Achieved a final RMSE of 72239.79 with LightGBM on the Kaggle Leaderboard, leveraging attributes like brand, model, year, mileage, and more.</p>
-								<p><strong>Skills:</strong> Python, LightGBM, Optuna, Feature Engineering, Data Preprocessing, Hyperparameter Tuning, Model Evaluation (RMSE), Data Visualization (Seaborn, Matplotlib)</p>
-							</li>							
-							<li>
-								<h4><a href="https://shudi-zhao.github.io/My_Data_Science_Blog/spacy/python/machine%20learning/data%20mining/nlp/randomforest/2021/05/08/Wine-Sommelier-Analysi-Part2.html" target="_blank">Wine Sommelier Analysis (Part I & II)</a></h4>
-								<p><strong>Description:</strong> Built a machine learning model using NLP to predict wine grape varieties based on sommelier descriptions. Applied Random Forest and XGBoost classifiers with text preprocessing and hyperparameter tuning.</p>
-								<p><strong>Skills:</strong> Python, spaCy, Scikit-learn, Seleniumg, NLP, Random Forest, XGBoost, GridSearchCV, Data Cleaning, Feature Engineering</p>
-							</li>
-							<li>
-								<h4><a href="https://shudi-zhao.github.io/My_Data_Science_Blog/machine%20learning/python/selenium/stock/2021/03/17/Stock-Prediction.html" target="_blank">Stock Price Prediction using Python</a></h4>
-								<p><strong>Description:</strong> Developed a stock price prediction model using Selenium to scrape the most active stock from Yahoo Finance and historical data from IEX Cloud API. Applied Linear Regression for future stock price prediction and automated email notifications for results.</p>
-								<p><strong>Skills:</strong> Python, Selenium, Linear Regression, Web Scraping, IEX Cloud API,  Machine Learning, Data Preprocessing, Data Extraction, Stock Price Forecasting, Automation</p>
-							</li>
-							<li>
-								<h4><a href="https://shudi-zhao.github.io/My_Data_Science_Blog/sentiment%20analysis/wordcloud/python/machine%20learning/data%20mining/2021/03/14/Sentiment-Analysis.html" target="_blank">Sentiment Analysis on Amazon Reviews</a></h4>
-								<p><strong>Description:</strong> A project focused on analyzing Amazon product reviews using text preprocessing, word cloud visualizations, and logistic regression to classify sentiments as positive or negative.</p>
-								<p><strong>Skills:</strong> Python, Sentiment Analysis, WordCloud, Logistic Regression, Seaborn, Scikit-learn, Data Cleaning, Data Visualization, Text Classification, Natural Language Processing (NLP), Machine Learning</p>
-							</li>
-						</ul>
-						<!-- Tableau Projects Section -->
-						<hr />
-						<h3>Tableau Projects</h3>
-						<ul>
-							<li>
-								<h4><a href="https://public.tableau.com/app/profile/shudi.zhao4744/viz/BritishAirwaysReviewsDashboard_17255026330130/Dashboard1#1" target="_blank">British Airways Reviews Dashboard</a></h4>
-								<p><strong>Description:</strong> This dashboard provides insights into British Airways reviews, allowing users to explore key metrics such as seat type, traveler type, and aircraft type to analyze customer satisfaction.</p>
-								<p><strong>Skills:</strong> Tableau, Data Visualization</p>
-							</li>
-							<li>
-								<h4><a href="https://public.tableau.com/app/profile/shudi.zhao4744/viz/DataScienceJobSalaryAnalysis_17255948048640/DataScienceJobSalary" target="_blank">Data Science Job Salaries Dashboard</a></h4>
-								<p><strong>Description:</strong> A dashboard analyzing data science job salaries across various countries, job titles, experience levels, and employment types, offering valuable insights into salary trends.</p>
-								<p><strong>Skills:</strong> Tableau, Data Analysis</p>
-							</li>
-						</ul>
-					
-						<!-- Excel Projects Section -->
-						<hr />
-						<h3>Excel Projects</h3>
-						<ul>
-							<li>
-								<h4><a href="https://github.com/Shudi-Zhao/coffee_sales_dashboard_excel/blob/main/coffee_sales_dashboard.png" target="_blank">Coffee Sales Dashboard in Excel</a></h4>
-								<p><strong>Description:</strong> an interactive excel dashboard that provides insights into coffee sales across different regions, customer types, and coffee varieties. It allows users to explore sales trends over time, as well as identify top-selling coffee types and loyal customers.</p>
-								<p><strong>Skills:</strong> Excel, Data Visualization, XLOOKUP, INDEX MATCH, Pivot Tables, Pivot Charts</p>
-							</li>
-						</ul>
-
-						<!-- Cloud Projects Section -->
-						<hr />
-						<h3>Cloud Projects</h3>
-						<ul>
-							<li>
-								<h4><a href="https://www.youtube.com/watch?v=Z4OV-IAUsfs" target="_blank">Flight Booking Website - Cloud Project</a></h4>
-								<p><strong>Description:</strong> Demonstration of a complete flight booking website built using Python Flask and AWS. The project covers user authentication, booking management, and cloud integration.</p>
-								<p><strong>Skills:</strong> Python Flask, AWS, Full-Stack Development</p>
-							</li>
-							<li>
-								<h4><a href="https://www.youtube.com/watch?v=1pYli449VCU" target="_blank">Hosting a Simple HTML Page on Azure</a></h4>
-								<p><strong>Description:</strong> A video walkthrough of how to host a simple HTML page on Microsoft Azure, covering the basics of deploying static web content to the cloud.</p>
-								<p><strong>Skills:</strong> Azure, Cloud Hosting</p>
-							</li>
-						</ul>
+					<!-- Programming Languages & Notebooks -->
+					<section class="mb-12 p-8 section-container">
+						<h2 class="text-3xl font-semibold mb-6 section-title">Programming Languages</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div>
+								<div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original-wordmark.svg" alt="Python" class="tech-logo">Python</div>
+								<div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg" alt="SQL" class="tech-logo">SQL</div>
+								<div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rstudio/rstudio-original.svg" alt="R" class="tech-logo">R</div>
+							</div>
+						</div>
 					</section>
-					
-					<!-- Coursework Section -->
-					<hr />
-					<h2>Coursework</h2>
-					<ul>
-						<li>Machine Learning</li>
-						<li>Data Mining</li>
-						<li>Cloud Computing and Big Data</li>
-						<li>Database</li>
-						<li>Statistical Computing and Graphics</li>
-						<li>Data Structure</li>
-						<li>Linear Regression</li>
-						<li>Statistical Theory and Method</li>
-						<li>Business Data Analytics</li>
-					</ul>
 
-					<hr />
+					<!-- Machine Learning & AI -->
+					<section class="mb-12 p-8 section-container">
+						<h2 class="text-3xl font-semibold mb-6 section-title">Machine LearningI</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div>
+								<div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg" alt="Scikit-learn" class="tech-logo">Scikit-learn</div>
+								<div class="tech-item"><img src="https://cdn.simpleicons.org/tensorflow" alt="TensorFlow" class="tech-logo">TensorFlow</div>
+								<div class="tech-item"><img src="https://cdn.simpleicons.org/pytorch" alt="PyTorch" class="tech-logo">PyTorch</div>
+							</div>
+							<div>
+								<div class="tech-item"><img src="https://cdn.simpleicons.org/spacy" alt="spaCy" class="tech-logo">spaCy</div>
+								<div class="tech-item"><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/huggingface-color.png" alt="Hugging Face" class="tech-logo">Hugging Face</div>
+								<div class="tech-item"><img src="https://miro.medium.com/v2/resize:fit:592/1*YM2HXc7f4v02pZBEO8h-qw.png" alt="NLTK" class="tech-logo">NLTK</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- Databases -->
+					<section class="mb-12 p-8 section-container">
+						<h2 class="text-3xl font-semibold mb-6 section-title">Databases</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div>
+								<div class="tech-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Apache_Hive_logo.svg/1200px-Apache_Hive_logo.svg.png" alt="Hive" class="tech-logo">Hive</div>
+								<div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg" alt="MySQL" class="tech-logo">MySQL</div>
+								<div class="tech-item"><img src="https://logowik.com/content/uploads/images/aws-rds2214.logowik.com.webp" alt="Amazon RDS" class="tech-logo">Amazon RDS</div>
+								<div class="tech-item"><img src="https://images.icon-icons.com/2699/PNG/512/google_bigquery_logo_icon_168150.png" alt="Google BigQuery" class="tech-logo">Google BigQuery</div>
+							</div>
+							<div>
+								<div class="tech-item"><img src="https://cdn.simpleicons.org/mongodb" alt="MongoDB" class="tech-logo">MongoDB</div>
+								<div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original-wordmark.svg" alt="Redis" class="tech-logo">Redis</div>
+								<div class="tech-item"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl863SLbPukpH1FBWI-SEMwIBg-as_w6lvqA&s" alt="Milvus" class="tech-logo">Milvus</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- Cloud Storage & Infrastructure -->
+					<section class="mb-12 p-8 section-container">
+						<h2 class="text-3xl font-semibold mb-6 section-title">Cloud</h2>
+						<div class="grid grid-cols-1 cloud-storage-grid gap-6">
+							<div>
+								<div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="tech-logo">AWS</div>
+								<div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg" alt="GCP" class="tech-logo">GCP</div>
+								<div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg" alt="Azure" class="tech-logo">Azure</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- Data Visualization & BI -->
+					<section class="mb-12 p-8 section-container">
+						<h2 class="text-3xl font-semibold mb-6 section-title">Data Visualization</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div>
+								<div class="tech-item"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Tableau_Logo.png" alt="Tableau" class="tech-logo">Tableau</div>
+								<div class="tech-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Superset_logo.svg/1280px-Superset_logo.svg.png" alt="Superset" class="tech-logo">Superset</div>
+								<div class="tech-item"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Mixpanel_full_logo_%E2%80%93_purple.png" alt="Mixpanel" class="tech-logo">Mixpanel</div>
+							</div>
+							<div>
+								<div class="tech-item"><img src="https://images.seeklogo.com/logo-png/42/2/matplotlib-logo-png_seeklogo-428048.png" alt="Matplotlib" class="tech-logo">Matplotlib</div>
+								<div class="tech-item"><img src="https://seaborn.pydata.org/_static/logo-wide-lightbg.svg" alt="Seaborn" class="tech-logo">Seaborn</div>
+								<div class="tech-item"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Plotly_logo_for_digital_final_%286%29.png" alt="Plotly" class="tech-logo">Plotly</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- Infrastructure & DevOps -->
+					<section class="mb-12 p-8 section-container">
+						<h2 class="text-3xl font-semibold mb-6 section-title">Infrastructure & DevOps</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div>
+								<div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux" class="tech-logo">Linux</div>
+								<div class="tech-item"><img src="https://cdn.simpleicons.org/docker" alt="Docker" class="tech-logo">Docker</div>
+							</div>
+							<div>
+								<div class="tech-item"><img src="https://cdn.simpleicons.org/github" alt="GitHub" class="tech-logo">GitHub</div>
+								<div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gitlab/gitlab-original.svg" alt="GitLab" class="tech-logo">GitLab</div>
+								<div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VSCode Notebooks" class="tech-logo">VSCode Notebooks</div>
+							</div>
+						</div>
+					</section>
 
 				</section>
 
 			</div>
 
-			<!-- Footer -->
+			<!-- Footer -->	
 			<footer id="footer">
 				<section class="split contact">
 					<section class="alt">
