@@ -1,0 +1,345 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Love Story</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #f472b6;
+      border-radius: 4px;
+    }
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Timeline line */
+    .timeline {
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 8%;
+      width: 4px;
+      background: #f472b6;
+      z-index: 1;
+    }
+    /* Timeline dot */
+    .timeline-item {
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .timeline-item.active .timeline-dot {
+      background: #f472b6;
+      transform: scale(1.5);
+    }
+    .timeline-item.active .timeline-content {
+      color: #f472b6;
+      font-weight: bold;
+    }
+    .timeline-dot {
+      cursor: pointer;
+      z-index: 2;
+    }
+    /* Carousel styles */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+    }
+    .carousel-inner {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .carousel-item {
+      flex: 0 0 100%;
+    }
+    /* Story text transition */
+    .story-text {
+      transition: opacity 0.5s ease;
+    }
+    /* Fade-in animation for proposal */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .fade-in {
+      animation: fadeIn 2s ease-in forwards;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .timeline::before {
+        left: 5%;
+      }
+      .timeline-dot {
+        left: 5% !important;
+        margin-left: -1.5rem;
+      }
+      .timeline-content {
+        padding-left: 2.5rem !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-pink-50 font-sans">
+  <audio id="bg-music" loop>
+    <source src="https://www.kozco.com/tech/piano2-CoolEdit.mp3" type="audio/mpeg">
+  </audio>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const timelineData = [
+      {
+        title: "First Date",
+        date: "June 4, 2021",
+        media: [
+          {
+            image: "https://www.dropbox.com/scl/fi/f5xhtfkunuwoagiwxythk/2024-11-16-19.45.23.jpg?rlkey=cexyg5yi562hcku7v99wqhml5&st=zwlpetie&raw=1",
+            story: "Our first date at that cozy little café, where we talked for hours and forgot the world around us."
+          },
+          {
+            image: "https://via.placeholder.com/600x400.png?text=First+Date+2",
+            story: "Sharing dessert and stealing glances, we knew something special was beginning."
+          }
+        ]
+      },
+      {
+        title: "Trip to Paris",
+        date: "August 15, 2022",
+        media: [
+          {
+            image: "https://via.placeholder.com/600x400.png?text=Paris+1",
+            story: "Strolling along the Seine, sharing crepes, and falling even more in love under the Eiffel Tower."
+          },
+          {
+            image: "https://via.placeholder.com/600x400.png?text=Paris+2",
+            story: "Watching the sunset from Montmartre, we promised to travel the world together."
+          }
+        ]
+      },
+      {
+        title: "Our First Apartment",
+        date: "March 10, 2023",
+        media: [
+          {
+            image: "https://via.placeholder.com/600x400.png?text=Apartment+1",
+            story: "Moving into our first place together, turning a house into a home with laughter and love."
+          }
+        ]
+      }
+      // Add more dates here in the same format, e.g.:
+      // {
+      //   title: "New Event",
+      //   date: "Month Day, Year",
+      //   media: [
+      //     {
+      //       image: "URL_to_image",
+      //       story: "Description of the moment"
+      //     },
+      //     {
+      //       image: "URL_to_another_image",
+      //       story: "Another description"
+      //     }
+      //   ]
+      // }
+    ];
+
+    const TimelineItem = ({ item, index, activeIndex, setActiveIndex }) => {
+      const [currentMedia, setCurrentMedia] = useState(0);
+      const itemRef = useRef(null);
+      const [isVisible, setIsVisible] = useState(false);
+
+      const nextMedia = () => {
+        setCurrentMedia((prev) => (prev + 1) % item.media.length);
+      };
+
+      const prevMedia = () => {
+        setCurrentMedia((prev) => (prev - 1 + item.media.length) % item.media.length);
+      };
+
+      const handleDotClick = () => {
+        setActiveIndex(index);
+        itemRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      };
+
+      useEffect(() => {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              setIsVisible(true);
+            }
+          },
+          { threshold: 0.1 }
+        );
+
+        if (itemRef.current) {
+          observer.observe(itemRef.current);
+        }
+
+        return () => {
+          if (itemRef.current) {
+            observer.unobserve(itemRef.current);
+          }
+        };
+      }, []);
+
+      return (
+        <div
+          ref={itemRef}
+          className={`timeline-item flex mb-12 ${activeIndex === index ? 'active' : ''} ${isVisible ? 'visible' : ''}`}
+        >
+          <div className="w-1/3 pr-8 relative">
+            <div
+              className="timeline-dot w-4 h-4 bg-gray-400 rounded-full absolute left-8% -ml-6 mt-2"
+              onClick={handleDotClick}
+            ></div>
+            <div className="timeline-content pl-12">
+              <h3 className="text-lg font-semibold">{item.title}</h3>
+              <p className="text-sm text-gray-600">{item.date}</p>
+            </div>
+          </div>
+          <div className="w-2/3 pl-8">
+            <div className="carousel bg-white p-6 rounded-lg shadow-lg">
+              <div className="carousel-inner" style={{ transform: `translateX(-${currentMedia * 100}%)` }}>
+                {item.media.map((media, i) => (
+                  <div key={i} className="carousel-item">
+                    <img src={media.image} alt={item.title} className="w-full h-64 object-cover rounded" />
+                  </div>
+                ))}
+              </div>
+              {item.media.length > 1 && (
+                <div className="flex justify-between mt-4">
+                  <button onClick={prevMedia} className="bg-pink-300 text-white px-4 py-2 rounded hover:bg-pink-400">Prev</button>
+                  <button onClick={nextMedia} className="bg-pink-300 text-white px-4 py-2 rounded hover:bg-pink-400">Next</button>
+                </div>
+              )}
+              <p className="mt-4 text-gray-700 story-text">{item.media[currentMedia].story}</p>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const App = () => {
+      const [activeIndex, setActiveIndex] = useState(0);
+      const [showProposal, setShowProposal] = useState(false);
+      const timelineRef = useRef([]);
+
+      useEffect(() => {
+        const audio = document.getElementById('bg-music');
+        audio.play().catch(() => console.log('Autoplay prevented'));
+
+        const handleScroll = () => {
+          const scrollPosition = window.scrollY + window.innerHeight / 2;
+          timelineRef.current.forEach((ref, index) => {
+            if (ref && ref.offsetTop <= scrollPosition && ref.offsetTop + ref.offsetHeight > scrollPosition) {
+              setActiveIndex(index);
+            }
+          });
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+
+      const handleProposalClick = () => {
+        setShowProposal(true);
+        setTimeout(() => {
+          window.location.href = "https://maps.app.goo.gl/dummy-proposal-location";
+        }, 3000);
+      };
+
+      return (
+        <div className="min-h-screen">
+          <header className="bg-pink-200 text-center py-12">
+            <h1 className="text-4xl font-bold text-pink-800">Our Love Story</h1>
+            <p className="text-lg text-pink-600 mt-2">A journey through our cherished moments</p>
+          </header>
+          <div className="container mx-auto px-4 py-12 relative timeline">
+            {timelineData.map((item, index) => (
+              <div key={index} ref={(el) => (timelineRef.current[index] = el)}>
+                <TimelineItem
+                  item={item}
+                  index={index}
+                  activeIndex={activeIndex}
+                  setActiveIndex={setActiveIndex}
+                />
+              </div>
+            ))}
+          </div>
+          <section className="bg-cover bg-center py-24 text-center text-white" style={{ backgroundImage: "url('https://via.placeholder.com/1200x400.png?text=Romantic+Background')" }}>
+            <h2 className="text-3xl font-bold mb-4">Are you ready for the next journey?</h2>
+            <button onClick={handleProposalClick} className="bg-pink-500 text-white px-8 py-4 rounded-full text-lg hover:bg-pink-600 transition">
+              Meet Me Here
+            </button>
+            {showProposal && (
+              <div className="mt-8 text-4xl font-bold fade-in">Will You Marry Me?</div>
+            )}
+          </section>
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
