@@ -137,6 +137,20 @@
     const { useState, useEffect, useRef } = React;
 
     const timelineData = [
+        {
+        title: "First Date",
+        date: "June 4, 2021",
+        media: [
+          {
+            image: "https://www.dropbox.com/scl/fi/f5xhtfkunuwoagiwxythk/2024-11-16-19.45.23.jpg?rlkey=cexyg5yi562hcku7v99wqhml5&st=zwlpetie&raw=1",
+            story: "Our first date at that cozy little café, where we talked for hours and forgot the world around us."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/f5xhtfkunuwoagiwxythk/2024-11-16-19.45.23.jpg?rlkey=cexyg5yi562hcku7v99wqhml5&st=zwlpetie&raw=1",
+            story: "Sharing dessert and stealing glances, we knew something special was beginning."
+          }
+        ]
+      },
       {
         title: "First Date",
         date: "June 4, 2021",
@@ -175,21 +189,6 @@
           }
         ]
       }
-      // Add more dates here in the same format, e.g.:
-      // {
-      //   title: "New Event",
-      //   date: "Month Day, Year",
-      //   media: [
-      //     {
-      //       image: "URL_to_image",
-      //       story: "Description of the moment"
-      //     },
-      //     {
-      //       image: "URL_to_another_image",
-      //       story: "Another description"
-      //     }
-      //   ]
-      // }
     ];
 
     const TimelineItem = ({ item, index, activeIndex, setActiveIndex }) => {
