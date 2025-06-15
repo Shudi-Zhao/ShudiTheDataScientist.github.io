@@ -191,55 +191,236 @@
     const { useState, useEffect, useRef } = React;
 
     const timelineData = [
-        {
-        title: "First Date",
-        date: "June 4, 2021",
+      {
+        title: "First Met",
+        date: "May 27, 2023",
         media: [
           {
-            image: "https://www.dropbox.com/scl/fi/f5xhtfkunuwoagiwxythk/2024-11-16-19.45.23.jpg?rlkey=cexyg5yi562hcku7v99wqhml5&st=zwlpetie&raw=1",
-            story: "Our first date at that cozy little café, where we talked for hours and forgot the world around us."
+            image: "https://www.dropbox.com/scl/fi/jgzjuttalsrji10o6k60i/2025-06-15-15.41.42.jpg?rlkey=pzl9cm62tmebh33niy8t4swxf&st=p3fjpy17&raw=1",
+            story: "Our story began at Grove Street PATH station, where we met for the very first time before grocery shopping at 99 Ranch. That moment felt like the start of something special."
           },
           {
-            image: "https://www.dropbox.com/scl/fi/f5xhtfkunuwoagiwxythk/2024-11-16-19.45.23.jpg?rlkey=cexyg5yi562hcku7v99wqhml5&st=zwlpetie&raw=1",
-            story: "Sharing dessert and stealing glances, we knew something special was beginning."
+            image: "https://www.dropbox.com/scl/fi/kj6yhml80jff84wdo9kry/2023-05-27-15.15.23.jpg?rlkey=c58jw5jewtp29ckjxnrzj1iay&st=dxn8m7dg&raw=1",
+            story: "That day, I cooked more dishes than ever before—something even my closest friends hadn’t experienced. You were the first to try my food, and it meant a lot."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/b9okjnv408175tmk1vbo0/2023-05-27-16.13.14.jpg?rlkey=1aaborsk063ha37sl8vn7wllx&st=1a4ody7x&raw=1",
+            story: "You surprised me with that matcha mochi brownie—so soft and rich. I still think about it. When can I have another one?"
           }
         ]
       },
       {
-        title: "First Date",
-        date: "June 4, 2021",
+        title: "Moments In Between",
+        date: "June 11, 2023 – July 23, 2023",
         media: [
           {
-            image: "https://www.dropbox.com/scl/fi/f5xhtfkunuwoagiwxythk/2024-11-16-19.45.23.jpg?rlkey=cexyg5yi562hcku7v99wqhml5&st=zwlpetie&raw=1",
-            story: "Our first date at that cozy little café, where we talked for hours and forgot the world around us."
+            image: "https://www.dropbox.com/scl/fi/8zynr5qiu8zmudhx5g3um/2025-06-15-16.11.00.jpg?rlkey=clf2x56mnj50i6dzeqwvlp9l8&st=ah5vkqes&raw=1",
+            story: "We went to my favorite 烤鱼 place and shared the lychee BBQ fish and the tomato one. It was cozy, flavorful, and just felt right."
           },
           {
-            image: "https://www.dropbox.com/scl/fi/f5xhtfkunuwoagiwxythk/2024-11-16-19.45.23.jpg?rlkey=cexyg5yi562hcku7v99wqhml5&st=zwlpetie&raw=1",
-            story: "Sharing dessert and stealing glances, we knew something special was beginning."
+            image: "https://www.dropbox.com/scl/fi/7zp3dzbh64yq82huvfcbp/2023-06-17-19.40.21.jpg?rlkey=a8tfi2o3h2ssgagtsjyj2f38v&st=ape6hyyo&raw=1",
+            story: "We treated ourselves to dessert at Cha An in East Village, and on the way back, we guessed each other's MBTI."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/p4a5bjvz30ev84d8g3a2v/2023-07-16-16.50.28.jpg?rlkey=ldigp1reyou1z1g3nyn3amdls&st=2odld9a2&raw=1",
+            story: "Six Flags was nearly empty because of the drizzle, but we had such a blast it didn’t matter. Just us, the rides, and laughter all around."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/nj1qdklck87zs4agmeqmj/2023-07-23-14.52.55.jpg?rlkey=u6uaauof80mw5sl05xgiah7rc&st=b6tp2fo3&raw=1",
+            story: "We made wontons together at Jane’s place, and that day I met you in the Path train, the first time I thought about dating you!"
           }
         ]
       },
       {
-        title: "Trip to Paris",
-        date: "August 15, 2022",
+        title: "The First Arrangement",
+        date: "May 10, 2024",
         media: [
           {
-            image: "https://www.dropbox.com/scl/fi/f5xhtfkunuwoagiwxythk/2024-11-16-19.45.23.jpg?rlkey=cexyg5yi562hcku7v99wqhml5&st=zwlpetie&raw=1",
-            story: "Strolling along the Seine, sharing crepes, and falling even more in love under the Eiffel Tower."
+            image: "https://www.dropbox.com/scl/fi/uzqv0lfnf6tn2flqlejq9/2025-06-15-16.42.06.jpg?rlkey=qy9nw0gf81bj8oab347gp0ofr&st=hxlc4wh5&raw=1",
+            story: "My dad called one day and asked if I’d be open to meeting a girl from your office. When I saw the photo he sent, I was stunned and nervous, unsure of how to even start a conversation with you."
           },
           {
-            image: "https://www.dropbox.com/scl/fi/f5xhtfkunuwoagiwxythk/2024-11-16-19.45.23.jpg?rlkey=cexyg5yi562hcku7v99wqhml5&st=zwlpetie&raw=1",
-            story: "Watching the sunset from Montmartre, we promised to travel the world together."
+            image: "https://www.dropbox.com/scl/fi/acghqxlvocwxw8l0zjmlj/2025-06-15-16.45.23.jpg?rlkey=7fxdwb0jemlk0tjhk1w722iji&st=4xj0ivoo&raw=1",
+            story: "I saw you in the cafeteria after sending a text. You looked absolutely gorgeous. I felt like the luckiest guy to even talk to you… but I learned you weren’t ready to date yet."
           }
         ]
       },
       {
-        title: "Our First Apartment",
-        date: "March 10, 2023",
+        title: "Our First Date",
+        date: "November 16, 2024",
         media: [
           {
-            image: "https://www.dropbox.com/scl/fi/f5xhtfkunuwoagiwxythk/2024-11-16-19.45.23.jpg?rlkey=cexyg5yi562hcku7v99wqhml5&st=zwlpetie&raw=1",
-            story: "Moving into our first place together, turning a house into a home with laughter and love."
+            image: "https://www.dropbox.com/scl/fi/xajnbq7ch22p5ywjqqdv3/2024-11-16-18.55.39.jpg?rlkey=2onl8q5t1au04euqsxavr97zj&st=yk85dikc&raw=1",
+            story: "This time, you were ready, so we went on our very first date. We picked a Thai restaurant, though honestly, nothing on the menu could compare to how lovely you looked that night."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/kus7maoebmpt2lnbyxuw3/2024-11-16-21.52.51.jpg?rlkey=ta2n7df949zzj9aabvgq441la&st=7gkuknel&raw=1",
+            story: "We wandered into the Apple Store and tried the Vision Pro. It was cool tech, but the most unforgettable part? Sharing that moment with the prettiest girl by my side."
+          }
+        ]
+      }
+    ,
+      {
+        title: "The First Confession",
+        date: "November 28, 2024",
+        media: [
+          {
+            image: "https://www.dropbox.com/scl/fi/bwtlenx54uu6khmhxiwgs/2024-11-28-13.17.10.jpg?rlkey=fikg9t3d473pighdhqhao7bxe&st=g3l6h57c&raw=1",
+            story: "Our third date happened to be Thanksgiving. I planned to ask you to be my girlfriend, and we started the day with brunch at Yin Ji Chang Fen, nervous but excited."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/wiy46xjxbp1tjnyga1zm4/2024-11-28-14.19.55.jpg?rlkey=jlnclp4ypvtisuj9vq5ndkpgr&st=295tyl4p&raw=1",
+            story: "Next, we stopped by 吃茶三千. I’d never tried it before, and the tea turned out to be amazing, just like the whole day with you."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/h3a7r52neut9f5fio57e9/2024-11-28-16.02.35.jpg?rlkey=5mz4c1vywc7pwnkedr5a30jsq&st=xvpeociy&raw=1",
+            story: "At Pier 26 Tide Deck, surrounded by a beautiful view, I asked you to be my girlfriend. That magical moment, your smile, I'll never forget it."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/3wdmcbbn0eyonefmc645r/2024-11-28-17.48.29.jpg?rlkey=ig581cith507pe2vcpq9wzsnd&st=xt4ymupw&raw=1",
+            story: "We spent the rest of the day around the Brooklyn Bridge, taking beautiful photos and soaking in the joy of something new beginning."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/lxberplze4o0bn2e7lehi/2024-11-28-19.47.14.jpg?rlkey=ywtcdle7agx37isnvutqrly3l&st=aqawm7oc&raw=1",
+            story: "Dinner at a Cantonese restaurant closed the day. A full heart, a full belly, and a moment that turned into one of my most treasured memories."
+          }
+        ]
+      }
+    ,
+      {
+        title: "First Kiss",
+        date: "December 14, 2024",
+        media: [
+          {
+            image: "https://www.dropbox.com/scl/fi/ir42pe3r5uuw5hz9aqvij/2024-12-14-18.39.46.jpg?rlkey=4u0ukv2foyehfb6rdnu4ecogj&st=1sii8d4b&raw=1",
+            story: "This was our fifth date, and we went to Din Tai Fung for dinner. The food was just okay, but your presence made the evening unforgettable."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/0kmcxyj4ey32g5fjffipz/2024-12-14-19.47.19.jpg?rlkey=9o61bwo7qr2kicisv4h9nkdnd&st=tjosff62&raw=1",
+            story: "We visited the Rockefeller Center to see the Christmas tree, and later had our very first kiss in Elmhurst Park. It was a night I'll never forget."
+          }
+        ]
+      },
+      {
+        title: "Soft Launch 💫",
+        date: "February 1, 2025",
+        media: [
+          {
+            image: "https://www.dropbox.com/scl/fi/6m6csq6ejk42rkv2cg9n7/2025-02-01-21.11.52.jpg?rlkey=8jticomxc50l1tuqcifl6szod&st=gqh1tz0d&raw=1",
+            story: "It was our 12th date, and we shared the best hot pot we’ve ever had at 重庆老灶 in Flushing. The food, the flavors, the vibe, everything was just perfect. I loved watching you enjoy every bite."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/3hfue8ui318rrjm7e8zjs/2025-02-01-20.19.14.jpg?rlkey=rojejrngq3sisy9zvitax44e3&st=hm0ofoos&raw=1",
+            story: "That night marked our soft launch. I posted this photo on my Story, and we both waited with nervous excitement to see who would notice first. A sweet little step that felt huge to us."
+          }
+        ]
+      }
+    ,
+      {
+        title: "Our First Valentine's 💐",
+        date: "February 14, 2025",
+        media: [
+          {
+            image: "https://www.dropbox.com/scl/fi/e3rw71ivuu4548l70rpxo/2025-02-14-20.10.23.jpg?rlkey=bn4duh61n1g4el1y132ydphj0&st=033njzjs&raw=1",
+            story: "It was our 14th date and our very first Valentine’s Day together. We tried Peking duck in the city. It was rich, crispy, and unforgettable, just like the night."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/105e29elyq9jjbkwr0ahp/2025-02-15-00.10.41.jpg?rlkey=yhs2mp3j3vo6tb9krbcezza96&st=frc8yaxf&raw=1",
+            story: "I spent over 30 minutes choosing your flowers. I skipped the pink roses, worried they might not stay fresh, and went with tulips instead. But seeing your smile, I promised myself: next time, only the best blooms for you."
+          }
+        ]
+      },
+      {
+        title: "Turning Point",
+        date: "March 3, 2025",
+        media: [
+          {
+            image: "https://www.dropbox.com/scl/fi/wwzxc2e0kog3m52vbczk2/2025-03-02-19.13.56.jpg?rlkey=p33cftaw1phsi4ayt0fd10j1l&st=auo8vx0v&raw=1",
+            story: "I truly thought our story might end that day. But your thoughtful response showed me your depth, your grace, your heart. That was the moment I knew this is the woman I want to marry."
+          }
+        ]
+      },
+      {
+        title: "Shen Yun Dream",
+        date: "March 26, 2025",
+        media: [
+          {
+            image: "https://www.dropbox.com/scl/fi/am5acgz8sedgw35k85dzs/2025-03-26-18.38.26-1.jpg?rlkey=pyvkcx4iar1j9oyizwbe0ucih&st=w3g32fuh&raw=1",
+            story: "This was our 25th date and finally my dream came true, we saw Shen Yun together. Watching it with you made it even more magical."
+          }
+        ]
+      },
+      {
+        title: "Meeting My Parents",
+        date: "May 18, 2025",
+        media: [
+          {
+            image: "https://www.dropbox.com/scl/fi/26ch9y4v30sm7vrc6iylv/2025-05-18-21.07.53.jpg?rlkey=n3b4qfmf86cehi7828n3muit1&st=gx0sk4qr&raw=1",
+            story: "Our first meal with my parents. They really like you! They always hoped for a daughter and now that dream feels closer to real."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/s1jvutbexvpoqqbkm8la1/2025-05-18-20.49.33.jpg?rlkey=166f3kexnng0mnct2xom3tqi9&st=kqlygzaw&raw=1",
+            story: "It seems like Lucky 🐱 really enjoyed your petting and didn’t even hide when he first met you. He loves you already!"
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/vim2h65epsqwwll248i9a/2025-05-19-12.40.25.jpg?rlkey=5tqu33fi7aesmzlp4xnfsyulp&st=kdtguhde&raw=1",
+            story: "We drove to our friend's wedding together, our first road trip as a couple. I hope my princess enjoyed the ride."
+          }
+        ]
+      },
+      {
+        title: "Ring Shopping Day",
+        date: "June 1, 2025",
+        media: [
+          {
+            image: "https://www.dropbox.com/scl/fi/3xl8uc5e20kxpa78qwsj1/2025-06-01-16.55.50.jpg?rlkey=uo5v4o7cae5gkueljjmwhiufa&st=r6lw05rn&raw=1",
+            story: "We went shopping for engagement rings and wedding bands on our 46th date. We both found the ones we love."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/q1f1jiam8c51rph6a66r2/2025-06-01-20.09.16.jpg?rlkey=6ongrzsn1cwo1i9h3nz4m8nwh&st=571f0jzn&raw=1",
+            story: "After ring shopping, we visited the pier where I first confessed. It’s even prettier in the summer. We’ll definitely come back again and again."
+          }
+        ]
+      }
+    ,
+      {
+        title: "Many More Firsts",
+        date: "",
+        media: [
+          {
+            image: "https://www.dropbox.com/scl/fi/40zqelr4ykouijme2z2h1/2024-12-06-21.23.46.jpg?rlkey=i6cu79pzfupxt1gpcbeltatz8&st=sqgus79g&raw=1",
+            story: "Our first time ice skating together on our fourth date. You were graceful, I was clumsy, but it was unforgettable."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/37ewszg7t6hf83o7pr8mk/2025-01-05-15.29.07.jpg?rlkey=89n8n8rxbzgawtxyolzkqtqw7&st=5liuv0v4&raw=1",
+            story: "First time cooking at home on our eighth date. Simple dishes, but so much joy from preparing them with you."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/hsiamoohqfekt86os6pf2/2025-02-27-18.39.41.jpg?rlkey=wxbtnnda1jyv0td1fg0os2ydu&st=vb7ll4ld&raw=1",
+            story: "The first matcha I made just for you in the office on our seventeenth date. A small gesture from the heart."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/hmtaqb9hfb0hgxm2fjtl4/2025-03-21-20.22.56.jpg?rlkey=nmviswi4p7mlstjxagly3jqkm&st=1x9m0cb7&raw=1",
+            story: "You drew me for the first time on our twenty-third date. I was amazed by your skill and felt even luckier to be yours."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/jqwjezxraflqeleg7wyqd/2025-03-23-15.58.03.jpg?rlkey=6wvo44z5chcq6j1lo1q64xlmm&st=lcs669cg&raw=1",
+            story: "Our first candle making on our twenty-fourth date. It was magical crafting something warm and fragrant together."
+          },
+          {
+            image: "https://www.dropbox.com/scl/fi/jd8d4thkesfmm404vy1qc/2025-04-27-17.25.21.jpg?rlkey=krdfddtjknyhvmtdlt5rywekm&st=na2ckbw9&raw=1",
+            story: "First time visiting Governor's Island on our thirty-fifth date. I kissed you under cherry blossoms, one of my favorite memories."
+          }
+        ]
+      }
+    ,
+      {
+        title: "What's Next?",
+        date: "",
+        media: [
+          {
+            image: "https://www.dropbox.com/scl/fi/vb5fdyffete47hikyu4a2/2025-06-01-19.57.53.jpg?rlkey=i2lnoqbgtf8tpnu0cpv8jsa6b&st=ost9594w&raw=1",
+            story: "This journey is just the beginning. Click the button below and meet me tonight at 8 PM, where our next chapter begins."
           }
         ]
       }
@@ -284,12 +465,13 @@
         };
       }, []);
 
-      // Typewriter effect for story text (moved outside JSX)
+      // Typewriter effect for story text (with proper cleanup)
       useEffect(() => {
         const targetId = `typing-${index}`;
         const el = document.getElementById(targetId);
         const text = item.media[currentMedia].story;
         let i = 0;
+        let typingTimeout;
 
         if (!el) return;
         el.textContent = '';
@@ -299,7 +481,7 @@
           if (i < text.length) {
             el.textContent += text[i];
             i++;
-            setTimeout(typeChar, text[i - 1] === ' ' ? 25 : 50);
+            typingTimeout = setTimeout(typeChar, text[i - 1] === ' ' ? 25 : 50);
           } else {
             el.style.borderRight = 'none';
           }
@@ -308,7 +490,11 @@
         typeChar();
 
         return () => {
-          if (el) el.textContent = '';
+          clearTimeout(typingTimeout);
+          if (el) {
+            el.textContent = '';
+            el.style.borderRight = 'none';
+          }
         };
       }, [currentMedia, index]);
 
@@ -353,6 +539,42 @@
         </div>
       );
 
+    };
+
+    const PasswordGate = ({ onUnlock }) => {
+      const [input, setInput] = useState('');
+      const [error, setError] = useState(false);
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (input === "iloveyou") {
+          onUnlock();
+        } else {
+          setError(true);
+        }
+      };
+
+      return (
+        <div className="min-h-screen bg-pink-100 flex items-center justify-center">
+          <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md text-center max-w-sm w-full">
+            <h2 className="text-2xl font-bold mb-4 font-heading text-pink-600">Enter the Secret Password</h2>
+            <input
+              type="password"
+              className="border border-gray-300 p-2 rounded w-full mb-4 font-ui"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Password"
+            />
+            {error && <p className="text-red-500 text-sm mb-2">Incorrect password. Try again.</p>}
+            <button
+              type="submit"
+              className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 font-ui"
+            >
+              Unlock
+            </button>
+          </form>
+        </div>
+      );
     };
 
     const App = () => {
@@ -440,7 +662,13 @@
       );
     };
 
-    ReactDOM.render(<App />, document.getElementById('root'));
+    const devMode = false;
+    const Root = () => {
+      const [unlocked, setUnlocked] = useState(devMode);
+      return unlocked ? <App /> : <PasswordGate onUnlock={() => setUnlocked(true)} />;
+    };
+
+    ReactDOM.render(<Root />, document.getElementById('root'));
   </script>
 </body>
 </html>
